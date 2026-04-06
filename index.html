@@ -1,0 +1,2071 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CBCS Legal & Compliance Interactive Mastery Lab</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f4ff;color:#1a1a2e;min-height:100vh}
+:root{--blue:#2563eb;--indigo:#4f46e5;--teal:#0d9488;--green:#16a34a;--amber:#d97706;--red:#dc2626;--purple:#7c3aed;--pink:#db2777;--light:#f0f4ff;--white:#fff;--border:#e2e8f0;--text:#1a1a2e;--muted:#64748b}
+
+/* NAV */
+.top-nav{background:linear-gradient(135deg,#1e1b4b 0%,#312e81 50%,#1e40af 100%);padding:0;position:sticky;top:0;z-index:100;box-shadow:0 4px 20px rgba(0,0,0,0.3)}
+.nav-header{padding:12px 20px;display:flex;align-items:center;gap:12px;border-bottom:1px solid rgba(255,255,255,0.1)}
+.nav-logo{font-size:18px;font-weight:700;color:#fff;letter-spacing:-0.5px}
+.nav-subtitle{font-size:11px;color:rgba(255,255,255,0.6);margin-top:1px}
+.nav-score-badge{margin-left:auto;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);border-radius:20px;padding:6px 14px;color:#fff;font-size:13px;font-weight:600}
+.nav-tabs{display:flex;overflow-x:auto;padding:0 8px;scrollbar-width:none;gap:2px}
+.nav-tabs::-webkit-scrollbar{display:none}
+.nav-tab{padding:10px 14px;color:rgba(255,255,255,0.65);font-size:12px;font-weight:500;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:all 0.2s;border-radius:4px 4px 0 0;flex-shrink:0}
+.nav-tab:hover{color:#fff;background:rgba(255,255,255,0.08)}
+.nav-tab.active{color:#fff;border-bottom-color:#fbbf24;background:rgba(255,255,255,0.12)}
+
+/* CONTENT */
+.tab-content{display:none;padding:24px 20px;max-width:900px;margin:0 auto;animation:fadeIn 0.3s ease}
+.tab-content.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* CARDS */
+.card{background:#fff;border-radius:14px;padding:20px;margin-bottom:16px;border:1px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+.card-header{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.card-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.card-title{font-size:16px;font-weight:700;color:var(--text)}
+.card-subtitle{font-size:12px;color:var(--muted);margin-top:2px}
+
+/* SECTION INTRO */
+.section-intro{background:linear-gradient(135deg,#ede9fe,#dbeafe);border-radius:14px;padding:20px;margin-bottom:20px;border:1px solid #c4b5fd}
+.section-intro h2{font-size:20px;font-weight:700;color:#312e81;margin-bottom:8px}
+.section-intro p{color:#4338ca;font-size:14px;line-height:1.6}
+.intro-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:14px}
+.intro-pill{background:rgba(255,255,255,0.7);border-radius:10px;padding:10px 14px;border:1px solid rgba(99,102,241,0.3)}
+.intro-pill-label{font-size:11px;font-weight:600;color:#6366f1;text-transform:uppercase;letter-spacing:0.5px}
+.intro-pill-text{font-size:13px;color:#312e81;margin-top:3px}
+
+/* CONCEPT SNAPSHOT */
+.concept-box{background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-left:4px solid #16a34a;border-radius:0 10px 10px 0;padding:14px 16px;margin-bottom:14px}
+.concept-box.blue{background:linear-gradient(135deg,#eff6ff,#dbeafe);border-left-color:#2563eb}
+.concept-box.purple{background:linear-gradient(135deg,#faf5ff,#ede9fe);border-left-color:#7c3aed}
+.concept-box.amber{background:linear-gradient(135deg,#fffbeb,#fef3c7);border-left-color:#d97706}
+.concept-box.red{background:linear-gradient(135deg,#fff1f2,#ffe4e6);border-left-color:#dc2626}
+.concept-box.teal{background:linear-gradient(135deg,#f0fdfa,#ccfbf1);border-left-color:#0d9488}
+.concept-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:#16a34a;margin-bottom:4px}
+.concept-box.blue .concept-label{color:#2563eb}
+.concept-box.purple .concept-label{color:#7c3aed}
+.concept-box.amber .concept-label{color:#d97706}
+.concept-box.red .concept-label{color:#dc2626}
+.concept-box.teal .concept-label{color:#0d9488}
+.concept-text{font-size:14px;color:#1a1a2e;line-height:1.6}
+
+/* QUESTION WIDGET */
+.q-block{background:#fff;border-radius:14px;border:2px solid var(--border);padding:18px;margin-bottom:14px;transition:border-color 0.2s}
+.q-block.correct{border-color:#16a34a;background:#f0fdf4}
+.q-block.incorrect{border-color:#dc2626;background:#fff1f2}
+.q-label{display:inline-block;background:#4f46e5;color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;margin-bottom:10px;letter-spacing:0.4px}
+.q-label.trap{background:#dc2626}
+.q-label.scenario{background:#0d9488}
+.q-label.apply{background:#d97706}
+.q-text{font-size:15px;font-weight:600;color:#1a1a2e;line-height:1.5;margin-bottom:14px}
+.q-options{display:grid;gap:8px}
+.q-opt{background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:10px;padding:11px 14px;cursor:pointer;font-size:14px;color:#334155;transition:all 0.15s;text-align:left;width:100%}
+.q-opt:hover{background:#eff6ff;border-color:#93c5fd;color:#1e40af}
+.q-opt.selected-correct{background:#f0fdf4;border-color:#16a34a;color:#15803d;font-weight:600}
+.q-opt.selected-wrong{background:#fff1f2;border-color:#fca5a5;color:#dc2626}
+.q-opt.reveal-correct{background:#dcfce7;border-color:#16a34a;color:#15803d;font-weight:600}
+.q-opt:disabled,.q-opt[disabled]{cursor:default}
+.q-feedback{display:none;margin-top:12px;padding:12px 14px;border-radius:10px;font-size:13px;line-height:1.6}
+.q-feedback.show{display:block}
+.q-feedback.correct{background:#f0fdf4;border:1px solid #86efac;color:#15803d}
+.q-feedback.incorrect{background:#fff1f2;border:1px solid #fca5a5;color:#b91c1c}
+.points-badge{display:inline-block;background:#fbbf24;color:#78350f;font-size:12px;font-weight:700;padding:2px 10px;border-radius:20px;margin-left:8px}
+
+/* ACCORDION */
+.acc-item{border:1px solid var(--border);border-radius:10px;margin-bottom:8px;overflow:hidden}
+.acc-trigger{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;cursor:pointer;background:#fff;font-size:14px;font-weight:600;color:var(--text);transition:background 0.15s}
+.acc-trigger:hover{background:#f8fafc}
+.acc-trigger .arrow{transition:transform 0.25s;font-size:16px;color:var(--muted)}
+.acc-trigger.open .arrow{transform:rotate(180deg)}
+.acc-body{display:none;padding:0 16px 16px;background:#fff;font-size:13px;color:#475569;line-height:1.7}
+.acc-body.open{display:block}
+
+/* PROGRESS */
+.progress-bar-wrap{background:#e2e8f0;border-radius:20px;height:8px;margin:6px 0;overflow:hidden}
+.progress-bar-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,#4f46e5,#7c3aed);transition:width 0.5s ease}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;border:none;transition:all 0.2s}
+.btn-primary{background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(79,70,229,0.4)}
+.btn-teal{background:linear-gradient(135deg,#0d9488,#0891b2);color:#fff}
+.btn-teal:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(13,148,136,0.4)}
+.btn-outline{background:#fff;border:2px solid #4f46e5;color:#4f46e5}
+.btn-outline:hover{background:#eff6ff}
+.btn-sm{padding:6px 14px;font-size:13px}
+
+/* BADGES */
+.badge{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600}
+.badge-green{background:#dcfce7;color:#15803d}
+.badge-blue{background:#dbeafe;color:#1d4ed8}
+.badge-red{background:#fee2e2;color:#b91c1c}
+.badge-amber{background:#fef3c7;color:#92400e}
+.badge-purple{background:#ede9fe;color:#6d28d9}
+
+/* CONCEPT MAP */
+.cmap-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:16px}
+.cmap-card{border-radius:12px;padding:14px;cursor:pointer;border:2px solid transparent;transition:all 0.2s;text-align:center}
+.cmap-card:hover{transform:translateY(-3px);box-shadow:0 6px 16px rgba(0,0,0,0.12)}
+.cmap-card.active{border-color:currentColor}
+.cmap-title{font-size:13px;font-weight:700;margin-top:6px}
+.cmap-sub{font-size:11px;margin-top:3px;opacity:0.8}
+.cmap-detail{display:none;background:#fff;border-radius:12px;padding:18px;border:1px solid var(--border);margin-top:8px}
+.cmap-detail.show{display:block}
+.detail-tag{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;margin-right:6px;margin-bottom:6px}
+
+/* COMPARE TABLE */
+.compare-table{width:100%;border-collapse:collapse;font-size:13px}
+.compare-table th{background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;padding:10px 12px;text-align:left;font-weight:600}
+.compare-table td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+.compare-table tr:nth-child(even) td{background:#f8fafc}
+.compare-table tr:hover td{background:#eff6ff}
+
+/* TRAP CALLOUT */
+.trap-box{background:linear-gradient(135deg,#fff1f2,#ffe4e6);border:2px solid #fca5a5;border-radius:12px;padding:14px 16px;margin:10px 0}
+.trap-label{font-size:11px;font-weight:700;color:#dc2626;text-transform:uppercase;letter-spacing:0.6px;margin-bottom:4px}
+.trap-text{font-size:13px;color:#7f1d1d;line-height:1.6}
+
+/* HOVER TERM */
+.hover-term{border-bottom:2px dashed #4f46e5;cursor:help;color:#4f46e5;font-weight:600;position:relative}
+.hover-term:hover::after{content:attr(data-def);position:absolute;bottom:calc(100% + 4px);left:50%;transform:translateX(-50%);background:#1e1b4b;color:#fff;padding:8px 12px;border-radius:8px;font-size:12px;font-weight:400;white-space:nowrap;max-width:260px;white-space:normal;z-index:50;pointer-events:none;line-height:1.4}
+
+/* WELCOME HERO */
+.hero{background:linear-gradient(135deg,#1e1b4b 0%,#312e81 40%,#1e40af 100%);border-radius:18px;padding:36px 28px;color:#fff;margin-bottom:20px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-40px;right:-40px;width:200px;height:200px;background:rgba(255,255,255,0.04);border-radius:50%}
+.hero-title{font-size:26px;font-weight:800;line-height:1.2;margin-bottom:8px}
+.hero-sub{font-size:15px;color:rgba(255,255,255,0.75);line-height:1.6;margin-bottom:20px}
+.hero-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.hero-tag{background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:600}
+.score-tracker{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:14px;padding:14px;margin-top:16px}
+.score-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.score-label{font-size:13px;color:rgba(255,255,255,0.7)}
+.score-value{font-size:22px;font-weight:700;color:#fbbf24}
+
+/* FLIP CARD */
+.flip-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:12px 0}
+.flip-card{height:100px;perspective:600px;cursor:pointer}
+.flip-inner{width:100%;height:100%;transition:transform 0.5s;transform-style:preserve-3d;position:relative}
+.flip-card.flipped .flip-inner{transform:rotateY(180deg)}
+.flip-front,.flip-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:10px;display:flex;align-items:center;justify-content:center;padding:10px;text-align:center;font-size:13px;font-weight:600}
+.flip-front{background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff}
+.flip-back{background:linear-gradient(135deg,#0d9488,#0891b2);color:#fff;transform:rotateY(180deg)}
+
+/* TOAST */
+#toast{position:fixed;bottom:20px;right:20px;background:#1e1b4b;color:#fff;padding:12px 20px;border-radius:12px;font-size:14px;font-weight:600;z-index:999;opacity:0;transition:opacity 0.3s;pointer-events:none}
+
+/* RESPONSIVE */
+@media(max-width:640px){
+  .hero-title{font-size:20px}
+  .nav-tab{font-size:11px;padding:8px 10px}
+  .tab-content{padding:16px 12px}
+  .cmap-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<div id="toast"></div>
+
+<!-- TOP NAV -->
+<nav class="top-nav">
+  <div class="nav-header">
+    <div>
+      <div class="nav-logo">CBCS Legal &amp; Compliance</div>
+      <div class="nav-subtitle">Interactive Mastery Lab</div>
+    </div>
+    <div class="nav-score-badge">⭐ <span id="total-score">0</span> pts</div>
+  </div>
+  <div class="nav-tabs">
+    <div class="nav-tab active" onclick="showTab(0)">Welcome</div>
+    <div class="nav-tab" onclick="showTab(1)">Concept Map</div>
+    <div class="nav-tab" onclick="showTab(2)">HIPAA &amp; PHI</div>
+    <div class="nav-tab" onclick="showTab(3)">Consent &amp; ROI</div>
+    <div class="nav-tab" onclick="showTab(4)">Fraud &amp; Billing</div>
+    <div class="nav-tab" onclick="showTab(5)">False Claims Act</div>
+    <div class="nav-tab" onclick="showTab(6)">Trap Lab</div>
+    <div class="nav-tab" onclick="showTab(7)">Scenarios</div>
+    <div class="nav-tab" onclick="showTab(8)">Timed Challenge</div>
+    <div class="nav-tab" onclick="showTab(9)">Rapid Review</div>
+  </div>
+</nav>
+
+<!-- ============================================================
+     TAB 0: WELCOME
+     ============================================================ -->
+<div class="tab-content active" id="tab-0">
+  <div class="hero">
+    <div class="hero-title">CBCS Legal &amp; Compliance<br>Interactive Mastery Lab</div>
+    <div class="hero-sub">A self-directed exam-prep system built around Unit 6 of the NHA CBCS exam — teaching you to think, not just memorize.</div>
+    <div class="hero-tags">
+      <span class="hero-tag">HIPAA &amp; PHI</span>
+      <span class="hero-tag">Fraud vs Abuse</span>
+      <span class="hero-tag">False Claims Act</span>
+      <span class="hero-tag">Upcoding &amp; Unbundling</span>
+      <span class="hero-tag">Consent &amp; Release</span>
+      <span class="hero-tag">Compliance</span>
+    </div>
+    <div class="score-tracker">
+      <div class="score-row">
+        <span class="score-label">Total Points Earned</span>
+        <span class="score-value" id="hero-score">0</span>
+      </div>
+      <div class="score-row">
+        <span class="score-label">Questions Answered</span>
+        <span class="score-value" id="hero-q">0</span>
+      </div>
+      <div class="progress-bar-wrap" style="background:rgba(255,255,255,0.2)">
+        <div class="progress-bar-fill" id="overall-progress" style="width:0%;background:linear-gradient(90deg,#fbbf24,#f59e0b)"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon" style="background:#ede9fe">🧭</div>
+      <div><div class="card-title">How to Use This Lab</div><div class="card-subtitle">Read before you start</div></div>
+    </div>
+    <div class="acc-item">
+      <div class="acc-trigger" onclick="toggleAcc(this)">What will I learn? <span class="arrow">▾</span></div>
+      <div class="acc-body">This lab covers every major legal and compliance topic tested on the NHA CBCS exam Unit 6: HIPAA, PHI, consent, authorization, release of information, fraud, abuse, upcoding, unbundling, the False Claims Act, and compliance programs. Content is drawn from the course PDF and verified against official NHA, HIPAA, and CMS resources.</div>
+    </div>
+    <div class="acc-item">
+      <div class="acc-trigger" onclick="toggleAcc(this)">How does it work? <span class="arrow">▾</span></div>
+      <div class="acc-body">Each tab is a self-contained learning zone. You'll see a brief concept snapshot, then immediately face questions. Every question has a rationale that explains why the correct answer is right and why other options are wrong. Click answer buttons, reveal explanations, and earn points as you go.</div>
+    </div>
+    <div class="acc-item">
+      <div class="acc-trigger" onclick="toggleAcc(this)">How do I earn points? <span class="arrow">▾</span></div>
+      <div class="acc-body">Every correct first-attempt answer earns points. Harder questions earn more. Your running total appears at the top right. The Timed Challenge Zone lets you earn bonus points. The goal isn't just to get points — it's to build real exam-day reasoning skills.</div>
+    </div>
+    <div class="acc-item">
+      <div class="acc-trigger" onclick="toggleAcc(this)">What are Trap Lab questions? <span class="arrow">▾</span></div>
+      <div class="acc-body">The CBCS exam uses carefully worded questions designed to test whether you know fine distinctions — like fraud vs. abuse, or use vs. disclosure. The Trap Lab isolates these and trains you to spot the key word or clue that changes the answer.</div>
+    </div>
+    <div class="acc-item">
+      <div class="acc-trigger" onclick="toggleAcc(this)">Should I go in order? <span class="arrow">▾</span></div>
+      <div class="acc-body">Yes, the first time through. The concepts build on each other. After your first pass, jump to any section for review. The Timed Challenge Zone is best saved for last since it pulls from all topics.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon" style="background:#dcfce7">🗺️</div>
+      <div><div class="card-title">What's in Each Tab</div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px">
+      <div style="background:#eff6ff;border-radius:10px;padding:12px;border-left:3px solid #2563eb"><div style="font-size:12px;font-weight:700;color:#1d4ed8">Tab 2 — Concept Map</div><div style="font-size:12px;color:#1e40af;margin-top:4px">Clickable topic overview</div></div>
+      <div style="background:#faf5ff;border-radius:10px;padding:12px;border-left:3px solid #7c3aed"><div style="font-size:12px;font-weight:700;color:#6d28d9">Tab 3 — HIPAA &amp; PHI</div><div style="font-size:12px;color:#5b21b6;margin-top:4px">Foundations + 12 questions</div></div>
+      <div style="background:#f0fdf4;border-radius:10px;padding:12px;border-left:3px solid #16a34a"><div style="font-size:12px;font-weight:700;color:#15803d">Tab 4 — Consent &amp; ROI</div><div style="font-size:12px;color:#166534;margin-top:4px">Authorization + compare activities</div></div>
+      <div style="background:#fffbeb;border-radius:10px;padding:12px;border-left:3px solid #d97706"><div style="font-size:12px;font-weight:700;color:#92400e">Tab 5 — Fraud &amp; Billing</div><div style="font-size:12px;color:#78350f;margin-top:4px">Upcoding, unbundling, abuse</div></div>
+      <div style="background:#fff1f2;border-radius:10px;padding:12px;border-left:3px solid #dc2626"><div style="font-size:12px;font-weight:700;color:#b91c1c">Tab 6 — False Claims</div><div style="font-size:12px;color:#991b1b;margin-top:4px">FCA + compliance enforcement</div></div>
+      <div style="background:#fef3c7;border-radius:10px;padding:12px;border-left:3px solid #f59e0b"><div style="font-size:12px;font-weight:700;color:#92400e">Tab 7 — Trap Lab</div><div style="font-size:12px;color:#78350f;margin-top:4px">High-risk distinctions</div></div>
+      <div style="background:#f0fdfa;border-radius:10px;padding:12px;border-left:3px solid #0d9488"><div style="font-size:12px;font-weight:700;color:#0f766e">Tab 8 — Scenarios</div><div style="font-size:12px;color:#115e59;margin-top:4px">Real office situations</div></div>
+      <div style="background:#fdf2f8;border-radius:10px;padding:12px;border-left:3px solid #db2777"><div style="font-size:12px;font-weight:700;color:#be185d">Tab 9 — Timed Challenge</div><div style="font-size:12px;color:#9d174d;margin-top:4px">60-second sprint mode</div></div>
+      <div style="background:#f8fafc;border-radius:10px;padding:12px;border-left:3px solid #64748b"><div style="font-size:12px;font-weight:700;color:#334155">Tab 10 — Rapid Review</div><div style="font-size:12px;color:#475569;margin-top:4px">Cheat sheets + reminders</div></div>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-top:10px">
+    <button class="btn btn-primary" onclick="showTab(1)" style="font-size:16px;padding:14px 36px">Start Learning →</button>
+  </div>
+</div>
+
+<!-- ============================================================
+     TAB 1: CONCEPT MAP
+     ============================================================ -->
+<div class="tab-content" id="tab-1">
+  <div class="section-intro">
+    <h2>PDF Concept Extraction Map</h2>
+    <p>Click any topic card below to explore: what it means, why CBCS tests it, and what students often confuse. These are the core concepts you must master for Unit 6.</p>
+    <div class="intro-grid">
+      <div class="intro-pill"><div class="intro-pill-label">You will learn</div><div class="intro-pill-text">The key topic clusters</div></div>
+      <div class="intro-pill"><div class="intro-pill-label">What to do</div><div class="intro-pill-text">Click each card to explore</div></div>
+      <div class="intro-pill"><div class="intro-pill-label">Check yourself</div><div class="intro-pill-text">Can you name the trap?</div></div>
+      <div class="intro-pill"><div class="intro-pill-label">Points</div><div class="intro-pill-text">Earn pts in each tab</div></div>
+    </div>
+  </div>
+
+  <div class="cmap-grid">
+    <div class="cmap-card" style="background:#ede9fe;color:#5b21b6" onclick="showCmapDetail('hipaa')">
+      <div style="font-size:28px">🔒</div>
+      <div class="cmap-title">HIPAA</div>
+      <div class="cmap-sub">Health info privacy law</div>
+    </div>
+    <div class="cmap-card" style="background:#dbeafe;color:#1d4ed8" onclick="showCmapDetail('phi')">
+      <div style="font-size:28px">🪪</div>
+      <div class="cmap-title">PHI</div>
+      <div class="cmap-sub">Protected Health Info</div>
+    </div>
+    <div class="cmap-card" style="background:#dcfce7;color:#15803d" onclick="showCmapDetail('consent')">
+      <div style="font-size:28px">✍️</div>
+      <div class="cmap-title">Consent &amp; Auth</div>
+      <div class="cmap-sub">Permission &amp; release</div>
+    </div>
+    <div class="cmap-card" style="background:#fef3c7;color:#92400e" onclick="showCmapDetail('fraud')">
+      <div style="font-size:28px">⚠️</div>
+      <div class="cmap-title">Fraud &amp; Abuse</div>
+      <div class="cmap-sub">Intentional vs pattern</div>
+    </div>
+    <div class="cmap-card" style="background:#ffe4e6;color:#b91c1c" onclick="showCmapDetail('upcoding')">
+      <div style="font-size:28px">📈</div>
+      <div class="cmap-title">Upcoding</div>
+      <div class="cmap-sub">Inflated code billing</div>
+    </div>
+    <div class="cmap-card" style="background:#fce7f3;color:#be185d" onclick="showCmapDetail('unbundling')">
+      <div style="font-size:28px">📦</div>
+      <div class="cmap-title">Unbundling</div>
+      <div class="cmap-sub">Splitting bundled codes</div>
+    </div>
+    <div class="cmap-card" style="background:#f0fdfa;color:#0f766e" onclick="showCmapDetail('fca')">
+      <div style="font-size:28px">⚖️</div>
+      <div class="cmap-title">False Claims Act</div>
+      <div class="cmap-sub">Federal fraud law</div>
+    </div>
+    <div class="cmap-card" style="background:#f8fafc;color:#334155" onclick="showCmapDetail('compliance')">
+      <div style="font-size:28px">📋</div>
+      <div class="cmap-title">Compliance</div>
+      <div class="cmap-sub">Policies &amp; controls</div>
+    </div>
+  </div>
+
+  <div id="cmap-detail-area"></div>
+
+  <!-- Quick concept check after map -->
+  <div class="card" style="margin-top:16px">
+    <div class="card-header"><div class="card-icon" style="background:#fef3c7">🎯</div><div><div class="card-title">Map Quick-Check</div></div></div>
+
+    <div class="q-block" id="qcm1">
+      <div class="q-label">RECOGNITION</div>
+      <div class="q-text">Which Unit 6 concept deals with submitting claims to Medicare for services that were never actually provided?</div>
+      <div class="q-options">
+        <button class="q-opt" onclick="answerQ('qcm1','a','d')">A. Abuse</button>
+        <button class="q-opt" onclick="answerQ('qcm1','b','d')">B. Upcoding</button>
+        <button class="q-opt" onclick="answerQ('qcm1','c','d')">C. Unbundling</button>
+        <button class="q-opt" onclick="answerQ('qcm1','d','d')">D. Fraud</button>
+      </div>
+      <div class="q-feedback" id="qcm1-fb"></div>
+    </div>
+
+    <div class="q-block" id="qcm2">
+      <div class="q-label">RECOGNITION</div>
+      <div class="q-text">A patient's name, date of birth, and diagnosis code together are an example of:</div>
+      <div class="q-options">
+        <button class="q-opt" onclick="answerQ('qcm2','a','b')">A. Confidential metadata</button>
+        <button class="q-opt" onclick="answerQ('qcm2','b','b')">B. PHI — Protected Health Information</button>
+        <button class="q-opt" onclick="answerQ('qcm2','c','b')">C. Administrative data only</button>
+        <button class="q-opt" onclick="answerQ('qcm2','d','b')">D. General public record</button>
+      </div>
+      <div class="q-feedback" id="qcm2-fb"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     TAB 2: HIPAA & PHI
+     ============================================================ -->
+<div class="tab-content" id="tab-2">
+  <div class="section-intro">
+    <h2>🔒 HIPAA &amp; PHI Foundations</h2>
+    <p>Master the law that governs patient information. CBCS tests your ability to apply HIPAA concepts — not just define them.</p>
+    <div class="intro-grid">
+      <div class="intro-pill"><div class="intro-pill-label">You will learn</div><div class="intro-pill-text">What HIPAA is &amp; what PHI covers</div></div>
+      <div class="intro-pill"><div class="intro-pill-label">What to do</div><div class="intro-pill-text">Read snapshot → answer questions</div></div>
+      <div class="intro-pill"><div class="intro-pill-label">Check yourself</div><div class="intro-pill-text">Can you identify a HIPAA risk?</div></div>
+      <div class="intro-pill"><div class="intro-pill-label">Points</div><div class="intro-pill-text">Up to 60 pts in this tab</div></div>
+    </div>
+  </div>
+
+  <!-- PRIOR KNOWLEDGE -->
+  <div class="q-block" id="qh0">
+    <div class="q-label">PRIOR KNOWLEDGE ACTIVATION</div>
+    <div class="q-text">Before we begin — which statement best describes why medical billers must understand HIPAA?</div>
+    <div class="q-options">
+      <button class="q-opt" onclick="answerQ('qh0','a','c')">A. Billers must memorize the full text of HIPAA</button>
+      <button class="q-opt" onclick="answerQ('qh0','b','c')">B. Billers are not covered by HIPAA since they only handle numbers</button>
+      <button class="q-opt" onclick="answerQ('qh0','c','c')">C. Billers regularly handle patient health information and must protect its privacy and security</button>
+      <button class="q-opt" onclick="answerQ('qh0','d','c')">D. HIPAA only applies to doctors and nurses</button>
+    </div>
+    <div class="q-feedback" id="qh0-fb"></div>
+  </div>
+
+  <div class="concept-box blue">
+    <div class="concept-label">HIPAA — The Big Picture</div>
+    <div class="concept-text">The <span class="hover-term" data-def="Health Insurance Portability and Accountability Act — federal law passed in 1996">Health Insurance Portability and Accountability Act (HIPAA)</span> sets national standards for protecting patient health information. It has two major rules relevant to billers: the <strong>Privacy Rule</strong> (who can access and share patient info) and the <strong>Security Rule</strong> (how electronic health info must be protected). <span class="hover-term" data-def="Any organization that handles PHI — includes providers, health plans, and their business associates">Covered entities</span> and their business associates must comply.</div>
+  </div>
+
+  <div class="concept-box purple">
+    <div class="concept-label">PHI — What It Is</div>
+    <div class="concept-text"><span class="hover-term" data-def="Protected Health Information — any individually identifiable health information held or transmitted by a covered entity">PHI (Protected Health Information)</span> is any information that can identify a patient AND relates to their health condition, healthcare received, or payment for care. PHI can be written, spoken, or electronic. Key identifiers include: name, date of birth, SSN, address, account number, dates of service, and diagnosis codes when linked to an individual. A <span class="hover-term" data-def="PHI in electronic format — stored or transmitted digitally">de-identified</span> record with all identifiers removed is NOT PHI.</div>
+  </div>
+
+  <!-- Q1 RECOGNITION -->
+  <div class="q-block" id="qh1">
+    <div class="q-label">RECOGNITION</div>
+    <div class="q-text">Which of the following IS considered PHI under HIPAA?</div>
+    <div class="q-options">
+      <button class="q-opt" onclick="answerQ('qh1','a','c')">A. A published medical journal article about a disease</button>
+      <button class="q-opt" onclick="answerQ('qh1','b','c')">B. A city-level health statistics report with no names</button>
+      <button class="q-opt" onclick="answerQ('qh1','c','c')">C. A billing statement showing a patient's name, diagnosis, and date of service</button>
+      <button class="q-opt" onclick="answerQ('qh1','d','c')">D. A training document explaining billing codes without patient names</button>
+    </div>
+    <div class="q-feedback" id="qh1-fb"></div>
+  </div>
+
+  <!-- Q2 UNDERSTANDING -->
+  <div class="q-block" id="qh2">
+    <div class="q-label">UNDERSTANDING</div>
+    <div class="q-text">What is the key difference between a "use" and a "disclosure" of PHI under HIPAA?</div>
+    <div class="q-options">
+      <button class="q-opt" onclick="answerQ('qh2','a','b')">A. Use refers to electronic PHI only; disclosure refers to paper records</button>
+      <button class="q-opt" onclick="answerQ('qh2','b','b')">B. Use is sharing PHI within the covered entity; disclosure is sharing PHI outside the covered entity</button>
+      <button class="q-opt" onclick="answerQ('qh2','c','b')">C. Use requires a patient signature; disclosure does not</button>
+      <button class="q-opt" onclick="answerQ('qh2','d','b')">D. They are legally identical terms with no practical difference</button>
+    </div>
+    <div class="q-feedback" id="qh2-fb"></div>
+  </div>
+
+  <div class="concept-box teal">
+    <div class="concept-label">Permitted Use vs Disclosure</div>
+    <div class="concept-text">HIPAA allows PHI to be used or disclosed without patient authorization for <strong>Treatment, Payment, and Healthcare Operations (TPO)</strong>. For example, sending a claim to an insurance company is permitted without extra patient consent because it is for payment purposes. Sharing PHI for non-TPO purposes (such as marketing or releasing records to an employer) generally requires a signed patient <span class="hover-term" data-def="A written document giving permission for a specific disclosure of PHI beyond TPO">authorization</span>.</div>
+  </div>
+
+  <!-- Q3 APPLICATION -->
+  <div class="q-block" id="qh3">
+    <div class="q-label apply">APPLICATION</div>
+    <div class="q-text">A biller sends a patient's claim information to the patient's health insurance company for reimbursement. Under HIPAA, this action is:</div>
+    <div class="q-options">
+      <button class="q-opt" onclick="answerQ('qh3','a','b')">A. A HIPAA violation because PHI is being disclosed</button>
+      <button class="q-opt" onclick="answerQ('qh3','b','b')">B. Permitted without patient authorization because it is for payment purposes</button>
+      <button class="q-opt" onclick="answerQ('qh3','c','b')">C. Permitted only if the patient signs a disclosure form first</button>
+      <button class="q-opt" onclick="answerQ('qh3','d','b')">D. Permitted only for Medicare patients, not private insurance</button>
+    </div>
+    <div class="q-feedback" id="qh3-fb"></div>
+  </div>
+
+  <!-- Q4 ANALYSIS -->
+  <div class="q-block" id="qh4">
+    <div class="q-label trap">ANALYSIS / TRAP</div>
+    <div class="q-text">A billing specialist receives a phone call from someone claiming to be the patient's employer asking about the patient's diagnosis. The specialist provides the information because the caller says it's for insurance purposes. This action is:</div>
+    <div class="q-options">
+      <button class="q-opt" onclick="answerQ('qh4','a','c')">A. Permitted — employers are covered entities under HIPAA</button>
+      <button class="q-opt" onclick="answerQ('qh4','b','c')">B. Permitted — insurance purposes are always TPO exceptions</button>
+      <button class="q-opt" onclick="answerQ('qh4','c','c')">C. A HIPAA violation — the employer is not an authorized recipient without patient authorization</button>
+      <button class="q-opt" onclick="answerQ('qh4','d','c')">D. Permitted — verbal requests are sufficient under HIPAA</button>
+    </div>
+    <div class="q-feedback" id="qh4-fb"></div>
+  </div>
+
+  <!-- IS THIS PHI ACTIVITY -->
+  <div class="card">
+    <div class="card-header"><div class="card-icon" style="background:#dbeafe">🔍</div><div><div class="card-title">Is This PHI? — Quick Identification Game</div><div class="card-subtitle">Click each item to reveal if it's PHI</div></div></div>
+    <div id="phi-game" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px"></div>
+  </div>
+
+  <!-- Q5 APPLICATION SCENARIO -->
+  <div class="q-block" id="qh5">
+    <div class="q-label apply">APPLICATION</div>
+    <div class="q-text">An office assistant leaves a printout of patient billing records on an unattended front desk where other patients can see it. This situation BEST represents which type of concern?</div>
+    <div class="q-options">
+      <button class="q-opt" onclick="answerQ('qh5','a','b')">A. A fraud concern under the False Claims Act</button>
+      <button class="q-opt" onclick="answerQ('qh5','b','b')">B. A HIPAA privacy breach due to impermissible disclosure of PHI</button>
+      <button class="q-opt" onclick="answerQ('qh5','c','b')">C. An administrative error with no legal consequence</button>
+      <button class="q-opt" onclick="answerQ('qh5','d','b')">D. A consent issue requiring patient re-authorization</button>
+    </div>
+    <div class="q-feedback" id="qh5-fb"></div>
+  </div>
+
+  <!-- Q6 COMPARE USE VS DISCLOSE -->
+  <div class="q-block" id="qh6">
+    <div class="q-label trap">TRAP QUESTION</div>
+    <div class="q-text">A physician's billing office accesses a patient's records to prepare a claim for services rendered. A biller then sends that same claim to the payer. Which statement is MOST accurate?</div>
+    <div class="q-options">
+      <button class="q-opt" onclick="answerQ('qh6','a','d')">A. Both actions are disclosures of PHI</button>
+      <button class="q-opt" onclick="answerQ('qh6','b','d')">B. Both actions are uses of PHI</button>
+      <button class="q-opt" onclick="answerQ('qh6','c','d')">C. Accessing the record is a disclosure; sending the claim is a use</button>
+      <button class="q-opt" onclick="answerQ('qh6','d','d')">D. Accessing the record is a use of PHI; sending the claim to the payer is a disclosure of PHI</button>
+    </div>
+    <div class="q-feedback" id="qh6-fb"></div>
+  </div>
+
+  <div class="concept-box">
+    <div class="concept-label">Minimum Necessary Standard</div>
+    <div class="concept-text">HIPAA requires that only the <strong>minimum necessary</strong> PHI be used or disclosed to accomplish a task. You should never share more patient information than is needed. For example, if an insurer requests diagnosis information for a claim, you should not also send the patient's entire medical history unless specifically required.</div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-block" id="qh7">
+    <div class="q-label apply">APPLICATION</div>
+    <div class="q-text">When submitting a claim for a sprained ankle, a biller includes the patient's full mental health history "to give the payer a complete picture." This violates which HIPAA principle?</div>
+    <div class="q-options">
+      <button class="q-opt" onclick="answerQ('qh7','a','c')">A. The Privacy Notice requirement</button>
+      <button class="q-opt" onclick="answerQ('qh7','b','c')">B. The Security Rule</button>
+      <button class="q-opt" onclick="answerQ('qh7','c','c')">C. The Minimum Necessary Standard</button>
+      <button class="q-opt" onclick="answerQ('qh7','d','c')">D. The Business Associate Agreement rule</button>
+    </div>
+    <div class="q-feedback" id="qh7-fb"></div>
+  </div>
+
+  <!-- FLIP CARDS: PHI identifiers -->
+  <div class="card">
+    <div class="card-header"><div class="card-icon" style="background:#ede9fe">🃏</div><div><div class="card-title">PHI Identifier Flip Cards</div><div class="card-subtitle">Click each card to see the PHI identifier example</div></div></div>
+    <div class="flip-grid">
+      <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-inner"><div class="flip-front">Name</div><div class="flip-back">John Smith = PHI when linked to health info</div></div></div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-inner"><div class="flip-front">Date of Birth</div><div class="flip-back">05/12/1980 = PHI when linked to a patient</div></div></div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-inner"><div class="flip-front">SSN</div><div class="flip-back">SSN alone can identify a patient = PHI</div></div></div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-inner"><div class="flip-front">Diagnosis Code</div><div class="flip-back">Diagnosis + patient name = PHI</div></div></div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-inner"><div class="flip-front">Account #</div><div class="flip-back">Patient account/MRN = PHI identifier</div></div></div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-inner"><div class="flip-front">City only</div><div class="flip-back">City alone is generally NOT a PHI identifier</div></div></div>
+    </div>
+  </div>
+
+  <!-- Q8 FINAL HIPAA -->
+  <div class="q-block" id="qh8">
+    <div class="q-label trap">HIGH-STAKES QUESTION</div>
+    <div class="q-text">Which of the following actions would be considered a permissible disclosure of PHI under HIPAA WITHOUT requiring a signed patient authorization?</div>
+    <div class="q-options">
+      <button class="q-opt" onclick="answerQ('qh8','a','c')">A. Sharing patient records with a pharmaceutical company for marketing research</button>
+      <button class="q-opt" onclick="answerQ('qh8','b','c')">B. Releasing a patient's mental health records to their employer upon the employer's request</button>
+      <button class="q-opt" onclick="answerQ('qh8','c','c')">C. Submitting a claim to the patient's health plan for treatment received</button>
+      <button class="q-opt" onclick="answerQ('qh8','d','c')">D. Sending a patient's full medical records to another hospital for general data analysis</button>
+    </div>
+    <div class="q-feedback" id="qh8-fb"></div>
+  </div>
+</div>
+
+<!-- ============================================================
+     TAB 3: CONSENT, AUTHORIZATION & ROI
+     ============================================================ -->
+<div class="tab-content" id="tab-3">
+  <div class="section-intro">
+    <h2>✍️ Consent, Authorization &amp; Release of Information</h2>
+    <p>These three concepts are closely related but legally distinct. CBCS loves to test whether you know the difference — and when each is required.</p>
+    <div class="intro-grid">
+      <div class="intro-pill"><div class="intro-pill-label">You will learn</div><div class="intro-pill-text">Consent vs auth vs ROI</div></div>
+      <div class="intro-pill"><div class="intro-pill-label">What to do</div><div class="intro-pill-text">Read + answer + compare</div></div>
+      <div class="intro-pill"><div class="intro-pill-label">Check yourself</div><div class="intro-pill-text">Can you spot an incomplete form?</div></div>
+      <div class="intro-pill"><div class="intro-pill-label">Points</div><div class="intro-pill-text">Up to 70 pts in this tab</div></div>
+    </div>
+  </div>
+
+  <!-- PRIOR KNOWLEDGE -->
+  <div class="q-block" id="qc0">
+    <div class="q-label">PRIOR KNOWLEDGE ACTIVATION</div>
+    <div class="q-text">A patient arrives for a scheduled appointment and verbally agrees to let the doctor examine them. This is an example of:</div>
+    <div class="q-options">
+      <button class="q-opt" onclick="answerQ('qc0','a','c')">A. Expressed written consent</button>
+      <button class="q-opt" onclick="answerQ('qc0','b','c')">B. HIPAA authorization</button>
+      <button class="q-opt" onclick="answerQ('qc0','c','c')">C. Implied consent</button>
+      <button class="q-opt" onclick="answerQ('qc0','d','c')">D. Release of information</button>
+    </div>
+    <div class="q-feedback" id="qc0-fb"></div>
+  </div>
+
+  <div class="concept-box">
+    <div class="concept-label">Consent — Two Types</div>
+    <div class="concept-text"><strong>Informed Consent</strong> is a patient's voluntary, documented agreement to undergo a medical procedure after being fully informed of the risks, benefits, and alternatives. It must be written. <strong>Implied Consent</strong> occurs when a patient's actions suggest agreement — such as extending an arm for a blood draw without objection, or presenting for treatment in an emergency when they cannot speak. Implied consent is generally not enough for surgical procedures.</div>
+  </div>
+
+  <div class="concept-box blue">
+    <div class="concept-label">Authorization — HIPAA-Specific</div>
+    <div class="concept-text">A HIPAA <span class="hover-term" data-def="A signed document allowing a specific disclosure of PHI beyond treatment, payment, or operations">Authorization</span> is a formal, signed permission document allowing a covered entity to use or disclose PHI for purposes beyond <strong>TPO</strong>. It must include: the specific information to be disclosed, who is receiving it, the purpose, an expiration date, and the patient's right to revoke. An authorization is required when sending records to an attorney, life insurer, or employer.</div>
+  </div>
+
+  <!-- COMPARE TABLE: INFORMED vs IMPLIED -->
+  <div class="card">
+    <div class="card-header"><div class="card-icon" style="background:#dcfce7">⚖️</div><div><div class="card-title">Compare: Consent Types</div></div></div>
+    <div style="overflow-x:auto">
+    <table class="compare-table">
+      <tr><th>Feature</th><th>Informed Consent</th><th>Implied Consent</th></tr>
+      <tr><td>Format</td><td>Written, signed document</td><td>Patient behavior / actions</td></tr>
+      <tr><td>Example</td><td>Signing surgery consent form</td><td>Presenting arm for blood draw</td></tr>
+      <tr><td>Requires explanation of risks?</td><td>Yes — fully documented</td><td>No formal explanation required</td></tr>
+      <tr><td>When used</td><td>Procedures, surgeries, clinical trials</td><td>Routine care, emergencies</td></tr>
+      <tr><td>Can be revoked?</td><td>Yes, typically before procedure</td><td>Not formally applicable</td></tr>
+    </table>
+    </div>
+  </div>
+
+  <!-- Q1 RECOGNITION -->
+  <div class="q-block" id="qc1">
+    <div class="q-label">RECOGNITION</div>
+    <div class="q-text">Informed consent differs from implied consent primarily because informed consent:</div>
+    <div class="q-options">
+      <button class="q-opt" onclick="answerQ('qc1','a','b')">A. Is only used in emergency situations</button>
+      <button class="q-opt" onclick="answerQ('qc1','b','b')">B. Requires the patient to be fully informed and provide written, documented agreement</button>
+      <button class="q-opt" onclick="answerQ('qc1','c','b')">C. Does not require explanation of risks</button>
+      <button class="q-opt" onclick="answerQ('qc1','d','b')">D. Can be inferred from patient behavior alone</button>
+    </div>
+    <div class="q-feedback" id="qc1-fb"></div>
+  </div>
+
+  <!-- Q2 APPLICATION -->
+  <div class="q-block" id="qc2">
+    <div class="q-label apply">APPLICATION</div>
+    <div class="q-text">An attorney's office contacts a medical practice requesting a patient's treatment records for a personal injury lawsuit. What does the medical practice MUST have before releasing those records?</div>
+    <div class="q-options">
+      <button class="q-opt" onclick="answerQ('qc2','a','c')">A. A verbal confirmation from the patient</button>
+      <button class="q-opt" onclick="answerQ('qc2','b','c')">B. A court order only — HIPAA does not apply to legal matters</button>
+      <button class="q-opt" onclick="answerQ('qc2','c','c')">C. A valid, signed HIPAA authorization from the patient</button>
+      <button class="q-opt" onclick="answerQ('qc2','d','c')">D. Approval from the treating physician only</button>
+    </div>
+    <div class="q-feedback" id="qc2-fb"></div>
+  </div>
+
+  <div class="concept-box purple">
+    <div class="concept-label">Release of Information (ROI)</div>
+    <div class="concept-text">Release of Information (ROI) is the process of fulfilling a request for patient health information. A valid ROI request requires: patient's identity, what information is requested, who it will be sent to, the purpose, a signature, and often an expiration date or event. <strong>Incomplete forms should NOT be processed.</strong> Only the person authorized to sign (typically the patient, or their legal guardian/representative) may authorize a release. Staff must verify identity and check form completeness before releasing any PHI.</div>
+  </div>
+
+  <!-- Q3 UNDERSTANDING ROI -->
+  <div class="q-block" id="qc3">
+    <div class="q-label">UNDERSTANDING</div>
+    <div class="q-text">A Release of Information form is received but does not include an expiration date or event. The BEST action for the medical records staff is to:</div>
+    <div class="q-options">
+      <button class="q-opt" onclick="answerQ('qc3','a','d')">A. Release the records since the form looks mostly complete</button>
+      <button class="q-opt" onclick="answerQ('qc3','b','d')">B. Release the records after noting the missing field in the chart</button>
+      <button class="q-opt" onclick="answerQ('qc3','c','d')">C. Ask the requesting party to fill in the expiration date</button>
+      <button class="q-opt" onclick="answerQ('qc3','d','d')">D. Return the form and request a complete, valid authorization before releasing any records</button>
+    </div>
+    <div class="q-feedback" id="qc3-fb"></div>
+  </div>
+
+  <!-- Q4 WHO CAN AUTHORIZE -->
+  <div class="q-block" id="qc4">
+    <div class="q-label apply">APPLICATION</div>
+    <div class="q-text">A patient's adult sibling calls the office and asks for a copy of the patient's recent lab results, stating they are "family and have a right to know." The CORRECT response is to:</div>
+    <div class="q-options">
+      <button class="q-opt" onclick="answerQ('qc4','a','d')">A. Release the records — family members are always authorized</button>
+      <button class="q-opt" onclick="answerQ('qc4','b','d')">B. Release summary information but not the full records</button>
+      <button class="q-opt" onclick="answerQ('qc4','c','d')">C. Ask the sibling to come in person to show ID</button>
+      <button class="q-opt" onclick="answerQ('qc4','d','d')">D. Decline to release records without a signed authorization from the patient</button>
+    </div>
+    <div class="q-feedback" id="qc4-fb"></div>
+  </div>
+
+  <!-- COMPARE: CONSENT vs AUTHORIZATION vs ROI -->
+  <div class="card">
+    <div class="card-header"><div class="card-icon" style="background:#fce7f3">📊</div><div><div class="card-title">Compare: Consent vs Authorization vs ROI</div></div></div>
+    <div style="overflow-x:auto">
+    <table class="compare-table">
+      <tr><th>Concept</th><th>Purpose</th><th>When Required</th><th>Key Element</th></tr>
+      <tr><td><span class="badge badge-green">Informed Consent</span></td><td>Agreement to treatment/procedure</td><td>Before procedures, surgeries</td><td>Risks, benefits, alternatives explained</td></tr>
+      <tr><td><span class="badge badge-blue">Implied Consent</span></td><td>Implied agreement by action</td><td>Routine exams, emergencies</td><td>Patient behavior signals agreement</td></tr>
+      <tr><td><span class="badge badge-purple">Authorization</span></td><td>Permit disclosure of PHI beyond TPO</td><td>Non-TPO disclosures (legal, employer)</td><td>Must be signed, specific, dated</td></tr>
+      <tr><td><span class="badge badge-amber">ROI</span></td><td>Process a records request</td><td>Any records release request</td><td>Complete form + verified identity</td></tr>
+    </table>
+    </div>
+  </div>
+
+  <!-- Q5 TRAP: CONSENT vs AUTHORIZATION -->
+  <div class="q-block" id="qc5">
+    <div class="q-label trap">TRAP QUESTION</div>
+    <div class="q-text">A patient signed a general consent form when registering at the clinic. Their employer now requests medical records for a disability determination. The office can release the records because the patient already signed a consent form. This statement is:</div>
+    <div class="q-options">
+      <button class="q-opt" onclick="answerQ('qc5','a','b')">A. True — a signed consent covers all future record requests</button>
+      <button class="q-opt" onclick="answerQ('qc5','b','b')">B. False — a general consent form does NOT substitute for a specific HIPAA authorization for this type of non-TPO disclosure</button>
+      <button class="q-opt" onclick="answerQ('qc5','c','b')">C. True — employer requests are covered under TPO exceptions</button>
+      <button class="q-opt" onclick="answerQ('qc5','d','b')">D. False — no records can ever be released without a court order</button>
+    </div>
+    <div class="q-feedback" id="qc5-fb"></div>
+  </div>
+
+  <!-- Q6 ANALYSIS -->
+  <div class="q-block" id="qc6">
+    <div class="q-label trap">ANALYSIS</div>
+    <div class="q-text">Which element, if missing from a Release of Information form, would make the form INVALID and prevent processing?</div>
+    <div class="q-options">
+      <button class="q-opt" onclick="answerQ('qc6','a','c')">A. The patient's insurance ID number</button>
+      <button class="q-opt" onclick="answerQ('qc6','b','c')">B. The patient's primary care physician's name</button>
+      <button class="q-opt" onclick="answerQ('qc6','c','c')">C. The patient's signature and an expiration date or event</button>
+      <button class="q-opt" onclick="answerQ('qc6','d','c')">D. The name of the practice manager</button>
+    </div>
+    <div class="q-feedback" id="qc6-fb"></div>
+  </div>
+
+  <!-- Q7 MINOR / GUARDIAN -->
+  <div class="q-block" id="qc7">
+    <div class="q-label apply">APPLICATION</div>
+    <div class="q-text">A 10-year-old patient's records are requested by a non-custodial parent. The BEST action is to:</div>
+    <div class="q-options">
+      <button class="q-opt" onclick="answerQ('qc7','a','c')">A. Release the records — all parents have equal rights to their child's records</button>
+      <button class="q-opt" onclick="answerQ('qc7','b','c')">B. Release the records if the parent provides a photo ID</button>
+      <button class="q-opt" onclick="answerQ('qc7','c','c')">C. Verify the parent's legal authorization to access the minor's records before releasing</button>
+      <button class="q-opt" onclick="answerQ('qc7','d','c')">D. Require the minor to sign an authorization</button>
+    </div>
+    <div class="q-feedback" id="qc7-fb"></div>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-label">⚠️ Test Trap: Consent ≠ Authorization</div>
+    <div class="trap-text">Students frequently choose answers that treat a signed registration consent form as covering all future disclosures. Remember: <strong>consent</strong> covers treatment and basic operations. A <strong>HIPAA authorization</strong> is a separate document required for specific non-TPO disclosures (sending records to insurers for disability, employers, legal cases, etc.). These are NOT the same form.</div>
+  </div>
+
+  <!-- Q8 SCENARIO -->
+  <div class="q-block" id="qc8">
+    <div class="q-label scenario">SCENARIO</div>
+    <div class="q-text">A biller receives a signed ROI form requesting records for a patient named "Maria Lopez." The signature on the form looks different from the patient's file signature. The records staff should:</div>
+    <div class="q-options">
+      <button class="q-opt" onclick="answerQ('qc8','a','c')">A. Release the records — signatures vary naturally</button>
+      <button class="q-opt" onclick="answerQ('qc8','b','c')">B. Release the records if the requestor provides additional contact information</button>
+      <button class="q-opt" onclick="answerQ('qc8','c','c')">C. Place a hold and contact the patient directly to verify the authorization before releasing</button>
+      <button class="q-opt" onclick="answerQ('qc8','d','c')">D. Shred the form and document the refusal</button>
+    </div>
+    <div class="q-feedback" id="qc8-fb"></div>
+  </div>
+</div>
+
+<!-- ============================================================
+     TABS 4-9: PLACEHOLDER (will be built in Parts 2 & 3)
+     ============================================================ -->
+<div class="tab-content" id="tab-4">
+  <div class="section-intro">
+    <h2>⚠️ Fraud, Abuse, Upcoding &amp; Unbundling</h2>
+    <p>These four concepts are the most heavily tested billing compliance topics on the CBCS. Learn to tell them apart — one wrong word choice on the exam costs you points.</p>
+    <div class="intro-grid">
+      <div class="intro-pill"><div class="intro-pill-label">You will learn</div><div class="intro-pill-text">Fraud vs abuse; upcoding vs unbundling</div></div>
+      <div class="intro-pill"><div class="intro-pill-label">What to do</div><div class="intro-pill-text">Read snapshots → answer 13 questions</div></div>
+      <div class="intro-pill"><div class="intro-pill-label">Check yourself</div><div class="intro-pill-text">Can you spot the clue that changes the answer?</div></div>
+      <div class="intro-pill"><div class="intro-pill-label">Points</div><div class="intro-pill-text">Up to 90 pts in this tab</div></div>
+    </div>
+  </div>
+
+  <!-- PRIOR KNOWLEDGE -->
+  <div class="q-block" id="qf0">
+    <div class="q-label">PRIOR KNOWLEDGE ACTIVATION</div>
+    <div class="q-text">A biller accidentally submits the wrong code because they misread a provider's handwriting. This is MOST likely:</div>
+    <div class="q-options">
+      <button class="q-opt" onclick="answerQ('qf0','a','b')">A. Fraud — any wrong code is fraud</button>
+      <button class="q-opt" onclick="answerQ('qf0','b','b')">B. Abuse — an improper billing pattern without proven intent to deceive</button>
+      <button class="q-opt" onclick="answerQ('qf0','c','b')">C. Upcoding — billing a higher level than performed</button>
+      <button class="q-opt" onclick="answerQ('qf0','d','b')">D. A False Claims Act violation</button>
+    </div>
+    <div class="q-feedback" id="qf0-fb"></div>
+  </div>
+
+  <div class="concept-box amber">
+    <div class="concept-label">Fraud — Intentional Deception</div>
+    <div class="concept-text"><span class="hover-term" data-def="Intentional deception or misrepresentation made by a person knowing it to be false, with the intent to receive an unauthorized benefit">Fraud</span> is an <strong>intentional act</strong>. It involves knowingly and willfully making false statements or misrepresentations to obtain payment. Key word: <strong>knowingly</strong>. Examples: billing for services never performed, falsifying diagnosis codes to justify a procedure, or billing for a higher-level service than was actually provided — when done deliberately. Fraud can result in criminal prosecution, civil penalties, and exclusion from federal programs.</div>
+  </div>
+
+  <div class="concept-box blue">
+    <div class="concept-label">Abuse — Improper Pattern Without Proven Intent</div>
+    <div class="concept-text"><span class="hover-term" data-def="Billing practices that are inconsistent with sound fiscal, business, or medical practices — resulting in unnecessary costs — but without clear intent to defraud">Abuse</span> involves billing practices that are <strong>improper or wasteful</strong> but do not necessarily involve intentional deception. Examples: consistently billing for services not medically necessary, charging above the allowable fee schedule, or routinely waiving copayments without documented hardship. Abuse can be corrected through education and process improvement. It may cross into fraud if intent is later proven.</div>
+  </div>
+
+  <!-- FRAUD VS ABUSE QUICK SORT GAME -->
+  <div class="card">
+    <div class="card-header"><div class="card-icon" style="background:#fef3c7">🎮</div><div><div class="card-title">Sort It: Fraud or Abuse?</div><div class="card-subtitle">Click each scenario to classify it</div></div></div>
+    <div id="fraud-sort-game" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px"></div>
+  </div>
+
+  <!-- Q1 RECOGNITION -->
+  <div class="q-block" id="qf1">
+    <div class="q-label">RECOGNITION</div>
+    <div class="q-text">The single MOST important factor that distinguishes fraud from abuse is:</div>
+    <div class="q-options">
+      <button class="q-opt" onclick="answerQ('qf1','a','c')">A. The dollar amount of the improper claim</button>
+      <button class="q-opt" onclick="answerQ('qf1','b','c')">B. Whether the patient was harmed</button>
+      <button class="q-opt" onclick="answerQ('qf1','c','c')">C. Whether the act was done knowingly and intentionally</button>
+      <button class="q-opt" onclick="answerQ('qf1','d','c')">D. Whether the payer is Medicare or private insurance</button>
+    </div>
+    <div class="q-feedback" id="qf1-fb"></div>
+  </div>
+
+  <!-- Q2 UNDERSTANDING -->
+  <div class="q-block" id="qf2">
+    <div class="q-label">UNDERSTANDING</div>
+    <div class="q-text">A physician's office consistently bills for 45-minute office visits when most encounters last only 15–20 minutes. No documentation supports the longer times. This pattern is BEST described as:</div>
+    <div class="q-options">
+      <button class="q-opt" onclick="answerQ('qf2','a','d')">A. Unbundling</button>
+      <button class="q-opt" onclick="answerQ('qf2','b','d')">B. A False Claims Act violation only</button>
+      <button class="q-opt" onclick="answerQ('qf2','c','d')">C. An administrative billing error</button>
+      <button class="q-opt" onclick="answerQ('qf2','d','d')">D. Upcoding — billing a higher E/M level than documented or performed</button>
+    </div>
+    <div class="q-feedback" id="qf2-fb"></div>
+  </div>
+
+  <div class="concept-box red">
+    <div class="concept-label">Upcoding — Billing Higher Than Performed</div>
+    <div class="concept-text"><span class="hover-term" data-def="Billing a higher-level procedure or E/M code than the service actually documented or performed">Upcoding</span> means assigning a <strong>higher-level code</strong> than the service actually documented and performed — to receive a greater reimbursement. Example: A patient has a brief 10-minute, low-complexity visit. The biller submits a code for a comprehensive, high-complexity visit. The code does not reflect the actual service. This is a form of fraud when done intentionally and is a common target of Medicare audits.</div>
+  </div>
+
+  <div class="concept-box purple">
+    <div class="concept-label">Unbundling — Splitting What Should Be One Code</div>
+    <div class="concept-text"><span class="hover-term" data-def="Billing multiple component codes separately when a single comprehensive code covers all those components — used to increase reimbursement">Unbundling</span> occurs when services that should be billed under a single <strong>comprehensive code</strong> are instead billed as multiple individual component codes — inflating the reimbursement. Example: A surgical package includes pre-op, surgery, and post-op. Billing each component separately instead of the global surgical code is unbundling. The <span class="hover-term" data-def="National Correct Coding Initiative — CMS edits that identify code pairs that should not be billed together">CCI (Correct Coding Initiative)</span> edits exist specifically to detect unbundling patterns.</div>
+  </div>
+
+  <!-- COMPARE TABLE -->
+  <div class="card">
+    <div class="card-header"><div class="card-icon" style="background:#ffe4e6">📊</div><div><div class="card-title">Compare: All Four Concepts</div></div></div>
+    <div style="overflow-x:auto">
+    <table class="compare-table">
+      <tr><th>Concept</th><th>Definition</th><th>Intent Required?</th><th>Billing Clue</th></tr>
+      <tr><td><span class="badge badge-red">Fraud</span></td><td>Intentional false claim for improper payment</td><td>Yes — knowingly</td><td>"Knowingly billed," fabricated services</td></tr>
+      <tr><td><span class="badge badge-amber">Abuse</span></td><td>Improper billing pattern without proven intent</td><td>Not required</td><td>Consistent pattern, no documentation</td></tr>
+      <tr><td><span class="badge badge-red">Upcoding</span></td><td>Billing higher code than service performed</td><td>Often intentional</td><td>Brief visit → complex visit code</td></tr>
+      <tr><td><span class="badge badge-purple">Unbundling</span></td><td>Splitting bundled code into separate components</td><td>Often intentional</td><td>Multiple codes instead of one global code</td></tr>
+    </table>
+    </div>
+  </div>
+
+  <!-- Q3 APPLICATION -->
+  <div class="q-block" id="qf3">
+    <div class="q-label apply">APPLICATION</div>
+    <div class="q-text">A surgical procedure includes pre-operative, intraoperative, and post-operative care under one global CPT code. Instead, the biller submits separate codes for each component. This is BEST classified as:</div>
+    <div class="q-options">
+      <button class="q-opt" onclick="answerQ('qf3','a','c')">A. Upcoding</button>
+      <button class="q-opt" onclick="answerQ('qf3','b','c')">B. Fraud</button>
+      <button class="q-opt" onclick="answerQ('qf3','c','c')">C. Unbundling</button>
+      <button class="q-opt" onclick="answerQ('qf3','d','c')">D. Abuse</button>
+    </div>
+    <div class="q-feedback" id="qf3-fb"></div>
+  </div>
+
+  <!-- Q4 TRAP -->
+  <div class="q-block" id="qf4">
+    <div class="q-label trap">TRAP QUESTION</div>
+    <div class="q-text">A biller submits a claim for a Level 4 E/M visit (complex, detailed exam). The provider's note documents only a Level 2 visit (brief, minimal complexity). The biller chose the higher code because "the provider usually does more than they document." This is BEST classified as:</div>
+    <div class="q-options">
+      <button class="q-opt" onclick="answerQ('qf4','a','b')">A. Abuse — the biller was trying to help the provider</button>
+      <button class="q-opt" onclick="answerQ('qf4','b','b')">B. Upcoding — a higher code was billed than what the documentation supports</button>
+      <button class="q-opt" onclick="answerQ('qf4','c','b')">C. Unbundling — multiple services were billed separately</button>
+      <button class="q-opt" onclick="answerQ('qf4','d','b')">D. A simple documentation error with no compliance risk</button>
+    </div>
+    <div class="q-feedback" id="qf4-fb"></div>
+  </div>
+
+  <!-- Q5 WHAT CHANGES THE ANSWER -->
+  <div class="q-block" id="qf5">
+    <div class="q-label trap">ANALYSIS — WHAT CLUE MATTERS MOST?</div>
+    <div class="q-text">Two scenarios: (1) A biller accidentally submits the wrong code due to a data entry error. (2) A biller submits the wrong (higher) code after the office manager instructs them to "always bill the highest level to maximize revenue." What determines whether scenario 2 is fraud rather than abuse?</div>
+    <div class="q-options">
+      <button class="q-opt" onclick="answerQ('qf5','a','c')">A. The dollar amount of the overpayment</button>
+      <button class="q-opt" onclick="answerQ('qf5','b','c')">B. Whether the patient filed a complaint</button>
+      <button class="q-opt" onclick="answerQ('qf5','c','c')">C. The intentional instruction to deliberately overbill — establishing knowing, willful conduct</button>
+      <button class="q-opt" onclick="answerQ('qf5','d','c')">D. The number of claims submitted incorrectly</button>
+    </div>
+    <div class="q-feedback" id="qf5-fb"></div>
+  </div>
+
+  <!-- Q6 ABUSE SCENARIO -->
+  <div class="q-block" id="qf6">
+    <div class="q-label scenario">SCENARIO</div>
+    <div class="q-text">An office routinely waives patient copayments for all patients without verifying financial hardship or documenting a valid reason. From a compliance standpoint, this practice is BEST described as:</div>
+    <div class="q-options">
+      <button class="q-opt" onclick="answerQ('qf6','a','b')">A. An acceptable customer service practice</button>
+      <button class="q-opt" onclick="answerQ('qf6','b','b')">B. Abuse — routine copayment waiver without documentation can be seen as misrepresenting the true cost of services to the payer</button>
+      <button class="q-opt" onclick="answerQ('qf6','c','b')">C. Fraud — because patients are not paying</button>
+      <button class="q-opt" onclick="answerQ('qf6','d','b')">D. Unbundling — services are being separated improperly</button>
+    </div>
+    <div class="q-feedback" id="qf6-fb"></div>
+  </div>
+
+  <!-- UPCODING vs UNBUNDLING SORTER -->
+  <div class="card">
+    <div class="card-header"><div class="card-icon" style="background:#fce7f3">🔀</div><div><div class="card-title">Upcoding or Unbundling?</div><div class="card-subtitle">Click each scenario to reveal the classification</div></div></div>
+    <div id="upcode-sort-game" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px"></div>
+  </div>
+
+  <!-- Q7 WORKPLACE CONSEQUENCE -->
+  <div class="q-block" id="qf7">
+    <div class="q-label apply">APPLICATION — WORKPLACE CONSEQUENCE</div>
+    <div class="q-text">A billing specialist discovers that the office has been systematically submitting claims for services not performed. What is the MOST appropriate immediate action?</div>
+    <div class="q-options">
+      <button class="q-opt" onclick="answerQ('qf7','a','c')">A. Continue processing claims and mention it at the next staff meeting</button>
+      <button class="q-opt" onclick="answerQ('qf7','b','c')">B. Correct only future claims and do not look back</button>
+      <button class="q-opt" onclick="answerQ('qf7','c','c')">C. Stop the improper billing immediately and report the concern through the office's compliance reporting process</button>
+      <button class="q-opt" onclick="answerQ('qf7','d','c')">D. Contact the payer directly without informing office leadership</button>
+    </div>
+    <div class="q-feedback" id="qf7-fb"></div>
+  </div>
+
+  <!-- Q8 RECOGNITION of ABUSE -->
+  <div class="q-block" id="qf8">
+    <div class="q-label">RECOGNITION</div>
+    <div class="q-text">Which of the following BEST represents abuse (not fraud) in medical billing?</div>
+    <div class="q-options">
+      <button class="q-opt" onclick="answerQ('qf8','a','d')">A. Knowingly submitting a claim for a service that was never provided</button>
+      <button class="q-opt" onclick="answerQ('qf8','b','d')">B. Falsifying a patient's diagnosis to justify an expensive test</button>
+      <button class="q-opt" onclick="answerQ('qf8','c','d')">C. Deliberately billing a higher code to increase revenue</button>
+      <button class="q-opt" onclick="answerQ('qf8','d','d')">D. Charging above the payer's fee schedule consistently without adjusting the allowed amount</button>
+    </div>
+    <div class="q-feedback" id="qf8-fb"></div>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-label">⚠️ Test Trap: Upcoding ≠ Unbundling</div>
+    <div class="trap-text"><strong>Upcoding</strong> = billing a HIGHER complexity or level code than was actually performed or documented. One code, wrong level.<br><br><strong>Unbundling</strong> = billing MULTIPLE separate codes when ONE comprehensive/global code should cover everything. Multiple codes, wrong combination.<br><br>Both inflate reimbursement. The clue: if the scenario mentions billing the wrong LEVEL — think upcoding. If it mentions billing things SEPARATELY that should be together — think unbundling.</div>
+  </div>
+
+  <!-- Q9 HIGH STAKES -->
+  <div class="q-block" id="qf9">
+    <div class="q-label trap">HIGH-STAKES QUESTION</div>
+    <div class="q-text">An auditor reviews a provider's billing records and finds that 90% of all office visits are billed at the highest complexity level, regardless of the patient's actual condition or the documentation in the chart. This pattern MOST strongly suggests:</div>
+    <div class="q-options">
+      <button class="q-opt" onclick="answerQ('qf9','a','b')">A. Unbundling of evaluation and management services</button>
+      <button class="q-opt" onclick="answerQ('qf9','b','b')">B. Systematic upcoding — a pattern of billing at levels not supported by documentation</button>
+      <button class="q-opt" onclick="answerQ('qf9','c','b')">C. Abuse only — because the auditor has not yet proven intent</button>
+      <button class="q-opt" onclick="answerQ('qf9','d','b')">D. A clerical error that is easily corrected</button>
+    </div>
+    <div class="q-feedback" id="qf9-fb"></div>
+  </div>
+</div>
+<div class="tab-content" id="tab-5">
+  <div class="section-intro">
+    <h2>⚖️ False Claims Act &amp; Compliance Enforcement</h2>
+    <p>The False Claims Act is the federal government's primary tool against healthcare fraud. Understand when it applies, what triggers it, and how compliance programs prevent violations.</p>
+    <div class="intro-grid">
+      <div class="intro-pill"><div class="intro-pill-label">You will learn</div><div class="intro-pill-text">FCA scope, penalties, and compliance controls</div></div>
+      <div class="intro-pill"><div class="intro-pill-label">What to do</div><div class="intro-pill-text">Read → answer 10 questions</div></div>
+      <div class="intro-pill"><div class="intro-pill-label">Check yourself</div><div class="intro-pill-text">Can you spot an FCA trigger?</div></div>
+      <div class="intro-pill"><div class="intro-pill-label">Points</div><div class="intro-pill-text">Up to 80 pts in this tab</div></div>
+    </div>
+  </div>
+
+  <!-- PRIOR KNOWLEDGE -->
+  <div class="q-block" id="qfca0">
+    <div class="q-label">PRIOR KNOWLEDGE ACTIVATION</div>
+    <div class="q-text">A billing office submits claims to Medicare for physical therapy services that were never actually performed. Which federal law is MOST directly violated?</div>
+    <div class="q-options">
+      <button class="q-opt" onclick="answerQ('qfca0','a','c')">A. HIPAA Privacy Rule</button>
+      <button class="q-opt" onclick="answerQ('qfca0','b','c')">B. The Anti-Kickback Statute only</button>
+      <button class="q-opt" onclick="answerQ('qfca0','c','c')">C. The False Claims Act</button>
+      <button class="q-opt" onclick="answerQ('qfca0','d','c')">D. The Stark Law</button>
+    </div>
+    <div class="q-feedback" id="qfca0-fb"></div>
+  </div>
+
+  <div class="concept-box teal">
+    <div class="concept-label">The False Claims Act — What It Is</div>
+    <div class="concept-text">The <span class="hover-term" data-def="Federal law (31 U.S.C. §§ 3729–3733) that imposes civil liability for submitting false or fraudulent claims to the federal government">False Claims Act (FCA)</span> is a federal law that makes it illegal to knowingly submit false or fraudulent claims to the federal government for payment — including Medicare and Medicaid. It applies to any person or organization that submits, causes to be submitted, or conspires to submit a false claim. Violations can result in civil penalties per false claim plus treble damages (three times the amount the government was defrauded).</div>
+  </div>
+
+  <div class="concept-box blue">
+    <div class="concept-label">Qui Tam — Whistleblower Provision</div>
+    <div class="concept-text">The FCA includes a <span class="hover-term" data-def="Latin for 'who as well' — allows private citizens to file FCA lawsuits on behalf of the government and share in any recovery">qui tam</span> provision that allows private individuals — including employees — to file a lawsuit on behalf of the government if they discover fraud. The whistleblower (called a "relator") may receive a portion of any funds recovered. This encourages insiders to report fraud. Retaliation against whistleblowers is prohibited under the FCA.</div>
+  </div>
+
+  <!-- Q1 RECOGNITION -->
+  <div class="q-block" id="qfca1">
+    <div class="q-label">RECOGNITION</div>
+    <div class="q-text">Under the False Claims Act, which type of federal program claim is subject to FCA liability?</div>
+    <div class="q-options">
+      <button class="q-opt" onclick="answerQ('qfca1','a','d')">A. Claims submitted to private insurance companies only</button>
+      <button class="q-opt" onclick="answerQ('qfca1','b','d')">B. Claims submitted to workers' compensation only</button>
+      <button class="q-opt" onclick="answerQ('qfca1','c','d')">C. Claims submitted to any insurance, public or private</button>
+      <button class="q-opt" onclick="answerQ('qfca1','d','d')">D. Claims submitted to federal programs such as Medicare and Medicaid</button>
+    </div>
+    <div class="q-feedback" id="qfca1-fb"></div>
+  </div>
+
+  <!-- Q2 UNDERSTANDING -->
+  <div class="q-block" id="qfca2">
+    <div class="q-label">UNDERSTANDING</div>
+    <div class="q-text">A billing employee discovers that their supervisor has been submitting claims for services not rendered to Medicare for several months. Under the False Claims Act, the employee has the right to:</div>
+    <div class="q-options">
+      <button class="q-opt" onclick="answerQ('qfca2','a','c')">A. Ignore it — the supervisor is responsible, not the employee</button>
+      <button class="q-opt" onclick="answerQ('qfca2','b','c')">B. Correct future claims only and not report past submissions</button>
+      <button class="q-opt" onclick="answerQ('qfca2','c','c')">C. Report the fraud — and is protected from retaliation and may be eligible to share in any recovery</button>
+      <button class="q-opt" onclick="answerQ('qfca2','d','c')">D. Report only to the state licensing board, not federal authorities</button>
+    </div>
+    <div class="q-feedback" id="qfca2-fb"></div>
+  </div>
+
+  <div class="concept-box">
+    <div class="concept-label">Compliance Programs — Preventing Violations</div>
+    <div class="concept-text">A healthcare <span class="hover-term" data-def="A set of internal controls, policies, and procedures designed to prevent, detect, and correct improper billing and regulatory violations">compliance program</span> helps organizations prevent FCA violations and HIPAA breaches. The OIG (Office of Inspector General) identifies seven core elements of an effective compliance program: written policies and procedures, a compliance officer/contact, staff education and training, effective lines of communication, internal monitoring and auditing, enforcement of standards, and prompt response to detected problems.</div>
+  </div>
+
+  <!-- COMPLIANCE ELEMENTS ACTIVITY -->
+  <div class="card">
+    <div class="card-header"><div class="card-icon" style="background:#f0fdfa">📋</div><div><div class="card-title">Compliance Program Elements</div><div class="card-subtitle">Click each element to see what it means in practice</div></div></div>
+    <div id="compliance-elements-game" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px"></div>
+  </div>
+
+  <!-- Q3 APPLICATION -->
+  <div class="q-block" id="qfca3">
+    <div class="q-label apply">APPLICATION</div>
+    <div class="q-text">An internal audit reveals that several claims submitted to Medicare over the past year were for services that were not properly documented. What should the compliance officer do FIRST?</div>
+    <div class="q-options">
+      <button class="q-opt" onclick="answerQ('qfca3','a','b')">A. Immediately contact Medicare and admit all errors without reviewing the full scope</button>
+      <button class="q-opt" onclick="answerQ('qfca3','b','b')">B. Conduct a thorough internal review to understand the scope, then follow proper disclosure and corrective action procedures</button>
+      <button class="q-opt" onclick="answerQ('qfca3','c','b')">C. Shred the problematic documentation to protect the organization</button>
+      <button class="q-opt" onclick="answerQ('qfca3','d','b')">D. Retrain staff only and continue submitting claims as usual</button>
+    </div>
+    <div class="q-feedback" id="qfca3-fb"></div>
+  </div>
+
+  <!-- Q4 FCA TRIGGER SCENARIOS -->
+  <div class="q-block" id="qfca4">
+    <div class="q-label trap">ANALYSIS — WHICH TRIGGERS THE FCA?</div>
+    <div class="q-text">Which of the following scenarios would MOST likely create False Claims Act liability?</div>
+    <div class="q-options">
+      <button class="q-opt" onclick="answerQ('qfca4','a','d')">A. A biller makes a one-time coding error on a private insurance claim that is promptly corrected</button>
+      <button class="q-opt" onclick="answerQ('qfca4','b','d')">B. A provider forgets to document a service but the service was genuinely performed</button>
+      <button class="q-opt" onclick="answerQ('qfca4','c','d')">C. A patient provides inaccurate information on their intake form</button>
+      <button class="q-opt" onclick="answerQ('qfca4','d','d')">D. A provider knowingly submits claims to Medicare for diagnostic tests that were ordered but medically unnecessary and never intended for patient care</button>
+    </div>
+    <div class="q-feedback" id="qfca4-fb"></div>
+  </div>
+
+  <!-- Q5 AUDIT AWARENESS -->
+  <div class="q-block" id="qfca5">
+    <div class="q-label apply">APPLICATION</div>
+    <div class="q-text">Why is regular internal auditing of billing records considered an essential part of a compliance program?</div>
+    <div class="q-options">
+      <button class="q-opt" onclick="answerQ('qfca5','a','c')">A. Audits are only needed when a government investigation is underway</button>
+      <button class="q-opt" onclick="answerQ('qfca5','b','c')">B. Audits are required by HIPAA for all covered entities</button>
+      <button class="q-opt" onclick="answerQ('qfca5','c','c')">C. Regular audits help detect billing errors and patterns early — before they become compliance violations or trigger external investigation</button>
+      <button class="q-opt" onclick="answerQ('qfca5','d','c')">D. Audits primarily benefit patients by improving the quality of care</button>
+    </div>
+    <div class="q-feedback" id="qfca5-fb"></div>
+  </div>
+
+  <div class="concept-box amber">
+    <div class="concept-label">Documentation = Defense</div>
+    <div class="concept-text">In compliance, <strong>if it isn't documented, it didn't happen</strong>. Billing for services without supporting documentation is one of the most common triggers for FCA investigations and Medicare audits. Proper documentation: supports the medical necessity of services, justifies the code level billed, and provides a defensible record if audited. Billers should never submit claims for services that lack appropriate clinical documentation.</div>
+  </div>
+
+  <!-- Q6 DOCUMENTATION -->
+  <div class="q-block" id="qfca6">
+    <div class="q-label scenario">SCENARIO</div>
+    <div class="q-text">A provider performs a service and tells the biller to go ahead and submit the claim before the documentation is completed. The biller submits the claim. If the service was never documented, this creates risk because:</div>
+    <div class="q-options">
+      <button class="q-opt" onclick="answerQ('qfca6','a','d')">A. HIPAA requires documentation before billing</button>
+      <button class="q-opt" onclick="answerQ('qfca6','b','d')">B. The claim may be reviewed by the wrong department</button>
+      <button class="q-opt" onclick="answerQ('qfca6','c','d')">C. The patient will receive the wrong bill amount</button>
+      <button class="q-opt" onclick="answerQ('qfca6','d','d')">D. Without documentation, the claim cannot be supported as valid — creating potential FCA and audit risk</button>
+    </div>
+    <div class="q-feedback" id="qfca6-fb"></div>
+  </div>
+
+  <!-- Q7 RETALIATION -->
+  <div class="q-block" id="qfca7">
+    <div class="q-label trap">TRAP QUESTION</div>
+    <div class="q-text">An employee reports suspected Medicare fraud through the company's compliance hotline. Two weeks later, the employee is fired. Under the False Claims Act, this termination:</div>
+    <div class="q-options">
+      <button class="q-opt" onclick="answerQ('qfca7','a','b')">A. Is legal — employment is at-will and the employer can terminate for any reason</button>
+      <button class="q-opt" onclick="answerQ('qfca7','b','b')">B. May constitute illegal retaliation against a whistleblower, which is prohibited by the FCA</button>
+      <button class="q-opt" onclick="answerQ('qfca7','c','b')">C. Is legal — only formal government whistleblowers are protected</button>
+      <button class="q-opt" onclick="answerQ('qfca7','d','b')">D. Is protected — employers can always terminate employees who report compliance issues</button>
+    </div>
+    <div class="q-feedback" id="qfca7-fb"></div>
+  </div>
+
+  <!-- Q8 OFFICE CONTROL -->
+  <div class="q-block" id="qfca8">
+    <div class="q-label apply">APPLICATION</div>
+    <div class="q-text">Which office-level control BEST prevents a billing specialist from submitting a fraudulent claim they were pressured to submit?</div>
+    <div class="q-options">
+      <button class="q-opt" onclick="answerQ('qfca8','a','d')">A. Requiring all billers to pass a CBCS exam</button>
+      <button class="q-opt" onclick="answerQ('qfca8','b','d')">B. Using electronic health records software</button>
+      <button class="q-opt" onclick="answerQ('qfca8','c','d')">C. Submitting all claims as quickly as possible</button>
+      <button class="q-opt" onclick="answerQ('qfca8','d','d')">D. A confidential compliance reporting system and a written policy that protects employees who refuse to submit improper claims</button>
+    </div>
+    <div class="q-feedback" id="qfca8-fb"></div>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-label">⚠️ Test Trap: FCA Scope</div>
+    <div class="trap-text">The False Claims Act applies to claims submitted to <strong>federal programs</strong> (Medicare, Medicaid, TRICARE, etc.) — not directly to private insurance. However, in practice, fraudulent billing behaviors often affect all payers. CBCS questions will typically anchor FCA scenarios to Medicare or Medicaid — if you see "private insurance only," that's a distractor. The FCA also does NOT require proof that the patient was harmed — only that a false claim was knowingly submitted.</div>
+  </div>
+</div>
+<div class="tab-content" id="tab-6">
+  <div class="section-intro">
+    <h2>🎯 CBCS Trap Lab</h2>
+    <p>This tab is dedicated to the trickiest distinctions on the exam. Every question here is designed to make you think carefully about ONE key clue that changes the entire answer.</p>
+    <div class="intro-grid">
+      <div class="intro-pill"><div class="intro-pill-label">You will learn</div><div class="intro-pill-text">High-risk distinctions that trip students up</div></div>
+      <div class="intro-pill"><div class="intro-pill-label">What to do</div><div class="intro-pill-text">Read the trap analysis, then answer</div></div>
+      <div class="intro-pill"><div class="intro-pill-label">Check yourself</div><div class="intro-pill-text">Can you name the clue that matters?</div></div>
+      <div class="intro-pill"><div class="intro-pill-label">Points</div><div class="intro-pill-text">Up to 80 pts — hardest questions here</div></div>
+    </div>
+  </div>
+
+  <!-- TRAP SELECTOR -->
+  <div class="card">
+    <div class="card-header"><div class="card-icon" style="background:#fee2e2">🪤</div><div><div class="card-title">Choose a Trap Pair to Study</div><div class="card-subtitle">Click to jump to that trap zone</div></div></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px">
+      <button class="btn btn-outline" onclick="showTrap('t1')" style="justify-content:flex-start;text-align:left">🔴 Fraud vs Abuse</button>
+      <button class="btn btn-outline" onclick="showTrap('t2')" style="justify-content:flex-start;text-align:left">🟣 Upcoding vs Unbundling</button>
+      <button class="btn btn-outline" onclick="showTrap('t3')" style="justify-content:flex-start;text-align:left">🟢 Consent vs Authorization</button>
+      <button class="btn btn-outline" onclick="showTrap('t4')" style="justify-content:flex-start;text-align:left">🔵 Use vs Disclosure</button>
+      <button class="btn btn-outline" onclick="showTrap('t5')" style="justify-content:flex-start;text-align:left">🟡 HIPAA Issue vs Workflow Error</button>
+      <button class="btn btn-outline" onclick="showTrap('t6')" style="justify-content:flex-start;text-align:left">🟠 FCA vs General Fraud</button>
+    </div>
+  </div>
+
+  <!-- TRAP ZONE 1: Fraud vs Abuse -->
+  <div id="trap-t1" class="trap-zone" style="display:none">
+    <div class="trap-box" style="border-color:#7c3aed;background:linear-gradient(135deg,#faf5ff,#ede9fe)">
+      <div class="trap-label" style="color:#7c3aed">🪤 TRAP PAIR: Fraud vs Abuse</div>
+      <div class="trap-text"><strong>Why students miss this:</strong> Both involve improper billing. But fraud requires <em>knowing, willful</em> intent to deceive. Abuse is a pattern that results in improper payment without proven intent.<br><br><strong>The clue that matters most:</strong> Look for the words "knowingly," "intentionally," "deliberately," or "instructed to" — those signal fraud. Look for "pattern," "consistently," "without documentation," or "error" — those lean toward abuse.</div>
+    </div>
+
+    <div class="q-block" id="qt1a">
+      <div class="q-label trap">TRAP Q1</div>
+      <div class="q-text">A coder receives an email from the billing manager stating: "From now on, code every E/M visit as a Level 5 regardless of documentation." The coder follows the instruction and submits claims accordingly. This conduct is BEST classified as:</div>
+      <div class="q-options">
+        <button class="q-opt" onclick="answerQ('qt1a','a','b')">A. Abuse — the coder was just following orders</button>
+        <button class="q-opt" onclick="answerQ('qt1a','b','b')">B. Fraud — there is a knowing, intentional instruction to submit false claims</button>
+        <button class="q-opt" onclick="answerQ('qt1a','c','b')">C. A documentation error requiring retraining</button>
+        <button class="q-opt" onclick="answerQ('qt1a','d','b')">D. Upcoding only — not fraud unless patients are harmed</button>
+      </div>
+      <div class="q-feedback" id="qt1a-fb"></div>
+    </div>
+
+    <div class="q-block" id="qt1b">
+      <div class="q-label trap">TRAP Q2</div>
+      <div class="q-text">An office manager notices that one provider's claims are being denied at a higher rate than others. Upon review, the biller realizes the provider consistently uses codes that don't match typical documentation for those services. No investigation has confirmed intent. This pattern is MOST accurately classified as:</div>
+      <div class="q-options">
+        <button class="q-opt" onclick="answerQ('qt1b','a','c')">A. Fraud — the pattern alone proves intent</button>
+        <button class="q-opt" onclick="answerQ('qt1b','b','c')">B. A False Claims Act violation</button>
+        <button class="q-opt" onclick="answerQ('qt1b','c','c')">C. Abuse — a billing pattern inconsistent with standards, without yet confirmed intent</button>
+        <button class="q-opt" onclick="answerQ('qt1b','d','c')">D. Unbundling — services are improperly separated</button>
+      </div>
+      <div class="q-feedback" id="qt1b-fb"></div>
+    </div>
+  </div>
+
+  <!-- TRAP ZONE 2: Upcoding vs Unbundling -->
+  <div id="trap-t2" class="trap-zone" style="display:none">
+    <div class="trap-box" style="border-color:#be185d;background:linear-gradient(135deg,#fdf2f8,#fce7f3)">
+      <div class="trap-label" style="color:#be185d">🪤 TRAP PAIR: Upcoding vs Unbundling</div>
+      <div class="trap-text"><strong>Why students miss this:</strong> Both inflate reimbursement. But they do it differently.<br><br><strong>Upcoding:</strong> ONE code, but it's the WRONG (higher) level. Think: the visit was simple, but billed as complex.<br><strong>Unbundling:</strong> MULTIPLE codes when ONE global/comprehensive code should be used. Think: splitting a surgical package into parts.<br><br><strong>The clue:</strong> "Higher level than performed" = upcoding. "Separate codes for included services" = unbundling.</div>
+    </div>
+
+    <div class="q-block" id="qt2a">
+      <div class="q-label trap">TRAP Q3</div>
+      <div class="q-text">A provider performs a routine preventive visit. The biller codes it as a comprehensive, high-complexity evaluation and management visit with multiple diagnoses. The clue that identifies this as UPCODING (not unbundling) is:</div>
+      <div class="q-options">
+        <button class="q-opt" onclick="answerQ('qt2a','a','c')">A. Multiple codes were used on the claim</button>
+        <button class="q-opt" onclick="answerQ('qt2a','b','c')">B. The service was billed to Medicare</button>
+        <button class="q-opt" onclick="answerQ('qt2a','c','c')">C. A single code was used, but at a higher complexity level than the documented service warranted</button>
+        <button class="q-opt" onclick="answerQ('qt2a','d','c')">D. The claim was denied by the payer</button>
+      </div>
+      <div class="q-feedback" id="qt2a-fb"></div>
+    </div>
+
+    <div class="q-block" id="qt2b">
+      <div class="q-label trap">TRAP Q4</div>
+      <div class="q-text">A cataract surgery includes the procedure, local anesthesia monitoring, and post-op follow-up under one global surgical code. The biller submits separate codes for each element. The clue that identifies this as UNBUNDLING (not upcoding) is:</div>
+      <div class="q-options">
+        <button class="q-opt" onclick="answerQ('qt2b','a','d')">A. The service was more complex than billed</button>
+        <button class="q-opt" onclick="answerQ('qt2b','b','d')">B. A higher-level code was chosen for a simple service</button>
+        <button class="q-opt" onclick="answerQ('qt2b','c','d')">C. The patient's insurance was private, not Medicare</button>
+        <button class="q-opt" onclick="answerQ('qt2b','d','d')">D. Services that should be covered under one global code were billed as separate individual codes</button>
+      </div>
+      <div class="q-feedback" id="qt2b-fb"></div>
+    </div>
+  </div>
+
+  <!-- TRAP ZONE 3: Consent vs Authorization -->
+  <div id="trap-t3" class="trap-zone" style="display:none">
+    <div class="trap-box" style="border-color:#15803d;background:linear-gradient(135deg,#f0fdf4,#dcfce7)">
+      <div class="trap-label" style="color:#15803d">🪤 TRAP PAIR: Consent vs Authorization</div>
+      <div class="trap-text"><strong>Why students miss this:</strong> Both involve patient permission. But they serve completely different legal purposes.<br><br><strong>Consent</strong> = patient agreement to receive treatment or care (covers TPO).<br><strong>Authorization</strong> = specific signed permission for a non-TPO disclosure of PHI (sending records to employer, attorney, researcher, etc.).<br><br><strong>The clue:</strong> If someone is asking for records to go OUTSIDE normal treatment/billing — that requires an authorization, not just a consent.</div>
+    </div>
+
+    <div class="q-block" id="qt3a">
+      <div class="q-label trap">TRAP Q5</div>
+      <div class="q-text">A patient signed a general consent form upon registering at the clinic for the first time. Six months later, the patient's life insurance company requests their full medical records. The office states: "The patient already signed a consent." Why is this reasoning INCORRECT?</div>
+      <div class="q-options">
+        <button class="q-opt" onclick="answerQ('qt3a','a','c')">A. It is correct — consent covers all future disclosures</button>
+        <button class="q-opt" onclick="answerQ('qt3a','b','c')">B. It is incorrect — consent forms expire after 90 days</button>
+        <button class="q-opt" onclick="answerQ('qt3a','c','c')">C. It is incorrect — a life insurance request is a non-TPO disclosure requiring a specific, current HIPAA authorization</button>
+        <button class="q-opt" onclick="answerQ('qt3a','d','c')">D. It is correct — life insurance is related to health, so it falls under TPO</button>
+      </div>
+      <div class="q-feedback" id="qt3a-fb"></div>
+    </div>
+
+    <div class="q-block" id="qt3b">
+      <div class="q-label trap">TRAP Q6</div>
+      <div class="q-text">Which of the following requires a HIPAA authorization (not just general consent)?</div>
+      <div class="q-options">
+        <button class="q-opt" onclick="answerQ('qt3b','a','d')">A. A provider sharing a patient's records with a specialist for a referral</button>
+        <button class="q-opt" onclick="answerQ('qt3b','b','d')">B. Submitting a claim to the patient's Medicare plan</button>
+        <button class="q-opt" onclick="answerQ('qt3b','c','d')">C. A nurse sharing a patient's diagnosis with the treating physician</button>
+        <button class="q-opt" onclick="answerQ('qt3b','d','d')">D. Releasing medical records to a pharmaceutical company for a research study</button>
+      </div>
+      <div class="q-feedback" id="qt3b-fb"></div>
+    </div>
+  </div>
+
+  <!-- TRAP ZONE 4: Use vs Disclosure -->
+  <div id="trap-t4" class="trap-zone" style="display:none">
+    <div class="trap-box" style="border-color:#1d4ed8;background:linear-gradient(135deg,#eff6ff,#dbeafe)">
+      <div class="trap-label" style="color:#1d4ed8">🪤 TRAP PAIR: Use vs Disclosure of PHI</div>
+      <div class="trap-text"><strong>Why students miss this:</strong> Both involve PHI being accessed or shared — but in different directions.<br><br><strong>Use:</strong> PHI is accessed or shared WITHIN the covered entity (internal).<br><strong>Disclosure:</strong> PHI is shared OUTSIDE the covered entity (external — to another provider, payer, attorney, etc.).<br><br><strong>The clue:</strong> Ask yourself — did the information leave the organization? If yes → disclosure. If it stayed inside → use.</div>
+    </div>
+
+    <div class="q-block" id="qt4a">
+      <div class="q-label trap">TRAP Q7</div>
+      <div class="q-text">A front desk clerk reviews a patient's billing record to verify the insurance plan before scheduling. A biller then sends the claim to the insurance company. Which pair CORRECTLY classifies these actions?</div>
+      <div class="q-options">
+        <button class="q-opt" onclick="answerQ('qt4a','a','c')">A. Both are uses of PHI</button>
+        <button class="q-opt" onclick="answerQ('qt4a','b','c')">B. Both are disclosures of PHI</button>
+        <button class="q-opt" onclick="answerQ('qt4a','c','c')">C. Reviewing internally = use; sending to insurer = disclosure</button>
+        <button class="q-opt" onclick="answerQ('qt4a','d','c')">D. Reviewing internally = disclosure; sending to insurer = use</button>
+      </div>
+      <div class="q-feedback" id="qt4a-fb"></div>
+    </div>
+  </div>
+
+  <!-- TRAP ZONE 5: HIPAA vs Workflow Error -->
+  <div id="trap-t5" class="trap-zone" style="display:none">
+    <div class="trap-box" style="border-color:#0d9488;background:linear-gradient(135deg,#f0fdfa,#ccfbf1)">
+      <div class="trap-label" style="color:#0d9488">🪤 TRAP PAIR: HIPAA Violation vs Workflow Error</div>
+      <div class="trap-text"><strong>Why students miss this:</strong> Not every mistake in a medical office is a HIPAA violation. HIPAA violations involve PHI being improperly accessed, used, or disclosed. A billing entry error, scheduling mistake, or filing error that does NOT expose patient information is a workflow problem — not a HIPAA issue.<br><br><strong>The clue:</strong> Ask — was PHI improperly seen, shared, or accessed by an unauthorized party? If yes → HIPAA concern. If no → workflow/administrative issue.</div>
+    </div>
+
+    <div class="q-block" id="qt5a">
+      <div class="q-label trap">TRAP Q8</div>
+      <div class="q-text">A biller enters the wrong CPT code on a claim and it is rejected by the payer. No patient information is exposed to any unauthorized individual. This situation is BEST classified as:</div>
+      <div class="q-options">
+        <button class="q-opt" onclick="answerQ('qt5a','a','c')">A. A HIPAA privacy violation</button>
+        <button class="q-opt" onclick="answerQ('qt5a','b','c')">B. A False Claims Act concern</button>
+        <button class="q-opt" onclick="answerQ('qt5a','c','c')">C. A billing workflow error — no PHI was improperly disclosed</button>
+        <button class="q-opt" onclick="answerQ('qt5a','d','c')">D. Upcoding</button>
+      </div>
+      <div class="q-feedback" id="qt5a-fb"></div>
+    </div>
+
+    <div class="q-block" id="qt5b">
+      <div class="q-label trap">TRAP Q9</div>
+      <div class="q-text">A staff member accidentally faxes a patient's diagnosis and medication list to the wrong physician's office. This is BEST classified as:</div>
+      <div class="q-options">
+        <button class="q-opt" onclick="answerQ('qt5b','a','b')">A. A workflow error — faxes are commonly misdirected</button>
+        <button class="q-opt" onclick="answerQ('qt5b','b','b')">B. A HIPAA privacy breach — PHI was disclosed to an unauthorized recipient</button>
+        <button class="q-opt" onclick="answerQ('qt5b','c','b')">C. Abuse — the mistake involves improper billing patterns</button>
+        <button class="q-opt" onclick="answerQ('qt5b','d','b')">D. A documentation error only</button>
+      </div>
+      <div class="q-feedback" id="qt5b-fb"></div>
+    </div>
+  </div>
+
+  <!-- TRAP ZONE 6: FCA vs General Fraud -->
+  <div id="trap-t6" class="trap-zone" style="display:none">
+    <div class="trap-box" style="border-color:#d97706;background:linear-gradient(135deg,#fffbeb,#fef3c7)">
+      <div class="trap-label" style="color:#d97706">🪤 TRAP PAIR: False Claims Act vs General Fraud</div>
+      <div class="trap-text"><strong>Why students miss this:</strong> All FCA violations involve fraud, but not all fraud is an FCA violation. The FCA specifically applies to claims submitted to FEDERAL government programs (Medicare, Medicaid, TRICARE).<br><br>If a provider submits a false claim to a private insurance company — that's fraud, but the FCA doesn't directly apply.<br><br><strong>The clue:</strong> Look for "Medicare," "Medicaid," or "federal program" in the scenario. That's your FCA trigger.</div>
+    </div>
+
+    <div class="q-block" id="qt6a">
+      <div class="q-label trap">TRAP Q10</div>
+      <div class="q-text">A provider submits false claims to Blue Cross Blue Shield (a private payer) for services never rendered. Which statement BEST describes the legal situation?</div>
+      <div class="q-options">
+        <button class="q-opt" onclick="answerQ('qt6a','a','c')">A. This violates the False Claims Act because all healthcare fraud does</button>
+        <button class="q-opt" onclick="answerQ('qt6a','b','c')">B. This is not fraud because the FCA doesn't apply</button>
+        <button class="q-opt" onclick="answerQ('qt6a','c','c')">C. This is fraud, but the False Claims Act specifically covers federal program claims — other laws address private payer fraud</button>
+        <button class="q-opt" onclick="answerQ('qt6a','d','c')">D. This is abuse, not fraud, because private insurance is not regulated</button>
+      </div>
+      <div class="q-feedback" id="qt6a-fb"></div>
+    </div>
+  </div>
+
+  <!-- MASTER TRAP CHALLENGE -->
+  <div class="card" style="margin-top:16px">
+    <div class="card-header"><div class="card-icon" style="background:#ede9fe">🏆</div><div><div class="card-title">Master Trap Challenge</div><div class="card-subtitle">Name the concept — no hints</div></div></div>
+
+    <div class="q-block" id="qtmaster">
+      <div class="q-label trap">MASTER CHALLENGE</div>
+      <div class="q-text">A billing office submits a claim to Medicare for a 60-minute psychotherapy session (CPT 90837). The provider's note documents a 30-minute supportive check-in (CPT 90832). No intent has been proven. Which concept BEST fits this scenario?</div>
+      <div class="q-options">
+        <button class="q-opt" onclick="answerQ('qtmaster','a','c')">A. Unbundling — services were split improperly</button>
+        <button class="q-opt" onclick="answerQ('qtmaster','b','c')">B. Abuse — a pattern exists with no proven intent</button>
+        <button class="q-opt" onclick="answerQ('qtmaster','c','c')">C. Upcoding — a higher-level code was billed than the documentation supports</button>
+        <button class="q-opt" onclick="answerQ('qtmaster','d','c')">D. A HIPAA violation — the patient's session length was disclosed</button>
+      </div>
+      <div class="q-feedback" id="qtmaster-fb"></div>
+    </div>
+  </div>
+</div>
+<!-- ============================================================
+     TAB 7: SCENARIO-BASED PRACTICE ARENA
+     ============================================================ -->
+<div class="tab-content" id="tab-7">
+  <div class="section-intro">
+    <h2>🏥 Scenario-Based Practice Arena</h2>
+    <p>Every scenario here is a realistic office situation. Read carefully — the clue that changes the answer is always in the details. Think like a biller, not just a student.</p>
+    <div class="intro-grid">
+      <div class="intro-pill"><div class="intro-pill-label">You will learn</div><div class="intro-pill-text">How concepts apply in real office situations</div></div>
+      <div class="intro-pill"><div class="intro-pill-label">What to do</div><div class="intro-pill-text">Read each scenario → choose → read the rationale</div></div>
+      <div class="intro-pill"><div class="intro-pill-label">Check yourself</div><div class="intro-pill-text">Can you name the skill being tested?</div></div>
+      <div class="intro-pill"><div class="intro-pill-label">Points</div><div class="intro-pill-text">Up to 100 pts — toughest questions yet</div></div>
+    </div>
+  </div>
+
+  <!-- SCENARIO 1: Records request -->
+  <div class="card">
+    <div class="card-header"><div class="card-icon" style="background:#dbeafe">📂</div><div><div class="card-title">Scenario 1 — The Records Request</div><div class="card-subtitle">Skill tested: Release of Information / Authorization</div></div></div>
+    <div class="concept-box blue" style="margin-bottom:14px">
+      <div class="concept-label">The Situation</div>
+      <div class="concept-text">A man calls the front desk identifying himself as James Torres, a patient of the practice. He says he needs a copy of his labs from last month faxed to his new employer's occupational health department as soon as possible. He sounds urgent and gives the correct date of birth when asked.</div>
+    </div>
+    <div class="q-block" id="qs1">
+      <div class="q-label scenario">SCENARIO QUESTION</div>
+      <div class="q-text">What is the MOST appropriate action for the medical records staff?</div>
+      <div class="q-options">
+        <button class="q-opt" onclick="answerQ('qs1','a','d')">A. Fax the labs immediately — he gave the correct date of birth, confirming identity</button>
+        <button class="q-opt" onclick="answerQ('qs1','b','d')">B. Fax a summary only — never the full lab report</button>
+        <button class="q-opt" onclick="answerQ('qs1','c','d')">C. Refuse the request entirely — phone requests are never permitted</button>
+        <button class="q-opt" onclick="answerQ('qs1','d','d')">D. Require a completed, signed HIPAA authorization from the patient before releasing any records to the employer</button>
+      </div>
+      <div class="q-feedback" id="qs1-fb"></div>
+    </div>
+    <div style="background:#f0f9ff;border-radius:8px;padding:10px;margin-top:8px;font-size:12px;color:#0369a1"><strong>Clue that mattered:</strong> Releasing to an employer is a non-TPO disclosure. Verbal identity confirmation is not a signed authorization. Urgency is a distractor.</div>
+  </div>
+
+  <!-- SCENARIO 2: Patient info shared incorrectly -->
+  <div class="card">
+    <div class="card-header"><div class="card-icon" style="background:#fce7f3">🚨</div><div><div class="card-title">Scenario 2 — The Waiting Room Conversation</div><div class="card-subtitle">Skill tested: HIPAA Privacy / Minimum Necessary</div></div></div>
+    <div class="concept-box red" style="margin-bottom:14px">
+      <div class="concept-label">The Situation</div>
+      <div class="concept-text">A front desk employee is on the phone confirming a patient's appointment. She says loudly, "So your follow-up for your HIV treatment is confirmed for Thursday at 2 PM." Several patients in the waiting room hear this clearly.</div>
+    </div>
+    <div class="q-block" id="qs2">
+      <div class="q-label scenario">SCENARIO QUESTION</div>
+      <div class="q-text">This situation MOST directly represents which type of compliance concern?</div>
+      <div class="q-options">
+        <button class="q-opt" onclick="answerQ('qs2','a','b')">A. Fraud — the biller misrepresented the patient's services</button>
+        <button class="q-opt" onclick="answerQ('qs2','b','b')">B. A HIPAA privacy breach — PHI (diagnosis and appointment) was disclosed to unauthorized individuals in the waiting room</button>
+        <button class="q-opt" onclick="answerQ('qs2','c','b')">C. Abuse — the staff billed a higher-level code than warranted</button>
+        <button class="q-opt" onclick="answerQ('qs2','d','b')">D. A consent issue — the patient did not sign a form for this appointment</button>
+      </div>
+      <div class="q-feedback" id="qs2-fb"></div>
+    </div>
+    <div style="background:#fff1f2;border-radius:8px;padding:10px;margin-top:8px;font-size:12px;color:#b91c1c"><strong>Clue that mattered:</strong> A specific diagnosis (HIV) was spoken aloud to unauthorized third parties. That is impermissible PHI disclosure — a HIPAA privacy breach.</div>
+  </div>
+
+  <!-- SCENARIO 3: Incomplete consent/release form -->
+  <div class="card">
+    <div class="card-header"><div class="card-icon" style="background:#dcfce7">📋</div><div><div class="card-title">Scenario 3 — The Incomplete Authorization</div><div class="card-subtitle">Skill tested: ROI form completeness / Authorization requirements</div></div></div>
+    <div class="concept-box" style="margin-bottom:14px">
+      <div class="concept-label">The Situation</div>
+      <div class="concept-text">A signed Release of Information form arrives by fax. The patient's name, the recipient's information, and what records are requested are all filled in. However, the expiration date field is left blank and the section asking for the purpose of the release says "N/A."</div>
+    </div>
+    <div class="q-block" id="qs3">
+      <div class="q-label scenario">SCENARIO QUESTION</div>
+      <div class="q-text">The medical records staff should:</div>
+      <div class="q-options">
+        <button class="q-opt" onclick="answerQ('qs3','a','d')">A. Release the records — the most important fields (name and request) are filled in</button>
+        <button class="q-opt" onclick="answerQ('qs3','b','d')">B. Fill in a reasonable expiration date themselves and process the request</button>
+        <button class="q-opt" onclick="answerQ('qs3','c','d')">C. Process the request but flag the missing information in the patient's chart</button>
+        <button class="q-opt" onclick="answerQ('qs3','d','d')">D. Return the form as incomplete — an expiration date or event and a stated purpose are required elements of a valid authorization</button>
+      </div>
+      <div class="q-feedback" id="qs3-fb"></div>
+    </div>
+    <div style="background:#f0fdf4;border-radius:8px;padding:10px;margin-top:8px;font-size:12px;color:#15803d"><strong>Clue that mattered:</strong> Missing expiration date AND missing purpose = invalid authorization. Staff cannot fill in missing elements themselves — only the authorizing patient/representative can.</div>
+  </div>
+
+  <!-- SCENARIO 4: Suspicious coding pattern -->
+  <div class="card">
+    <div class="card-header"><div class="card-icon" style="background:#fef3c7">🔎</div><div><div class="card-title">Scenario 4 — The Coding Pattern</div><div class="card-subtitle">Skill tested: Upcoding / Compliance action</div></div></div>
+    <div class="concept-box amber" style="margin-bottom:14px">
+      <div class="concept-label">The Situation</div>
+      <div class="concept-text">A new billing specialist notices that the previous biller always submitted Level 5 E/M codes for all established patient visits, regardless of complexity. Looking at the provider notes, most visits are brief and low-complexity. The previous biller told her: "The doctor is busy — just always use the highest code."</div>
+    </div>
+    <div class="q-block" id="qs4">
+      <div class="q-label scenario">SCENARIO QUESTION</div>
+      <div class="q-text">The new biller's BEST course of action is to:</div>
+      <div class="q-options">
+        <button class="q-opt" onclick="answerQ('qs4','a','d')">A. Continue the practice — the previous biller must have known what they were doing</button>
+        <button class="q-opt" onclick="answerQ('qs4','b','d')">B. Lower the codes on current claims only and ignore past submissions</button>
+        <button class="q-opt" onclick="answerQ('qs4','c','d')">C. Ask the office manager if this is allowed before making any changes</button>
+        <button class="q-opt" onclick="answerQ('qs4','d','d')">D. Stop the practice immediately, bill codes that match the documentation, and report the prior pattern through the compliance reporting channel</button>
+      </div>
+      <div class="q-feedback" id="qs4-fb"></div>
+    </div>
+    <div style="background:#fffbeb;border-radius:8px;padding:10px;margin-top:8px;font-size:12px;color:#92400e"><strong>Clue that mattered:</strong> An explicit instruction to "always use the highest code" regardless of documentation = intentional upcoding = fraud. The new biller must not continue and must report.</div>
+  </div>
+
+  <!-- SCENARIO 5: Claim appears intentionally inflated -->
+  <div class="card">
+    <div class="card-header"><div class="card-icon" style="background:#ffe4e6">💰</div><div><div class="card-title">Scenario 5 — The Inflated Claim</div><div class="card-subtitle">Skill tested: Fraud / False Claims Act</div></div></div>
+    <div class="concept-box red" style="margin-bottom:14px">
+      <div class="concept-label">The Situation</div>
+      <div class="concept-text">A biller receives a superbill from a provider for a 15-minute follow-up visit. The provider has written "bill as new patient comprehensive visit" in the margin. The patient has been seen at this practice for three years. The biller submits the claim to Medicare as instructed.</div>
+    </div>
+    <div class="q-block" id="qs5">
+      <div class="q-label scenario">SCENARIO QUESTION</div>
+      <div class="q-text">This situation raises concern under which law, and why?</div>
+      <div class="q-options">
+        <button class="q-opt" onclick="answerQ('qs5','a','c')">A. HIPAA — patient records were shared without authorization</button>
+        <button class="q-opt" onclick="answerQ('qs5','b','c')">B. The Stark Law — the provider is self-referring</button>
+        <button class="q-opt" onclick="answerQ('qs5','c','c')">C. The False Claims Act — a knowingly false claim was submitted to a federal program (Medicare) by billing an established patient as a new comprehensive visit</button>
+        <button class="q-opt" onclick="answerQ('qs5','d','c')">D. The Anti-Kickback Statute — the biller received an improper incentive</button>
+      </div>
+      <div class="q-feedback" id="qs5-fb"></div>
+    </div>
+    <div style="background:#fff1f2;border-radius:8px;padding:10px;margin-top:8px;font-size:12px;color:#b91c1c"><strong>Clue that mattered:</strong> Knowingly billing an established patient as a new patient to a federal payer = intentional false claim = FCA violation. The written instruction proves knowledge/intent.</div>
+  </div>
+
+  <!-- SCENARIO 6: Bundled service billed separately -->
+  <div class="card">
+    <div class="card-header"><div class="card-icon" style="background:#fce7f3">📦</div><div><div class="card-title">Scenario 6 — The Split Bill</div><div class="card-subtitle">Skill tested: Unbundling / CCI edits</div></div></div>
+    <div class="concept-box purple" style="margin-bottom:14px">
+      <div class="concept-label">The Situation</div>
+      <div class="concept-text">A biller submits a claim for a colonoscopy. Instead of using the global colonoscopy code, they bill separately for: the scope insertion, the polyp removal, the pathology interpretation, and the recovery monitoring — each as a separate line item. The biller believes this "maximizes reimbursement."</div>
+    </div>
+    <div class="q-block" id="qs6">
+      <div class="q-label scenario">SCENARIO QUESTION</div>
+      <div class="q-text">This billing practice is BEST described as:</div>
+      <div class="q-options">
+        <button class="q-opt" onclick="answerQ('qs6','a','c')">A. Upcoding — a higher-level code was used than the service performed</button>
+        <button class="q-opt" onclick="answerQ('qs6','b','c')">B. Abuse — the pattern lacks proven intent</button>
+        <button class="q-opt" onclick="answerQ('qs6','c','c')">C. Unbundling — components covered under a global procedure code were billed individually to inflate reimbursement</button>
+        <button class="q-opt" onclick="answerQ('qs6','d','c')">D. A legitimate itemization — patients deserve detailed bills</button>
+      </div>
+      <div class="q-feedback" id="qs6-fb"></div>
+    </div>
+    <div style="background:#fdf2f8;border-radius:8px;padding:10px;margin-top:8px;font-size:12px;color:#be185d"><strong>Clue that mattered:</strong> Components of a global/comprehensive procedure billed separately = unbundling. The stated goal of "maximizing reimbursement" by splitting codes signals intentional improper billing.</div>
+  </div>
+
+  <!-- SCENARIO 7: Employee accesses info without job need -->
+  <div class="card">
+    <div class="card-header"><div class="card-icon" style="background:#ede9fe">🔐</div><div><div class="card-title">Scenario 7 — The Curious Employee</div><div class="card-subtitle">Skill tested: HIPAA / Minimum Necessary / Access controls</div></div></div>
+    <div class="concept-box purple" style="margin-bottom:14px">
+      <div class="concept-label">The Situation</div>
+      <div class="concept-text">A billing specialist accesses the medical record of a coworker who was recently in the hospital. The billing specialist has valid system access but the coworker is not one of their assigned accounts. The specialist says, "I was just curious how they're doing."</div>
+    </div>
+    <div class="q-block" id="qs7">
+      <div class="q-label scenario">SCENARIO QUESTION</div>
+      <div class="q-text">This situation is BEST described as:</div>
+      <div class="q-options">
+        <button class="q-opt" onclick="answerQ('qs7','a','c')">A. Acceptable — the employee has system access and good intentions</button>
+        <button class="q-opt" onclick="answerQ('qs7','b','c')">B. Acceptable — employees may view records of anyone they personally know</button>
+        <button class="q-opt" onclick="answerQ('qs7','c','c')">C. A HIPAA violation — accessing PHI without a job-related need violates the Minimum Necessary standard and constitutes impermissible use</button>
+        <button class="q-opt" onclick="answerQ('qs7','d','c')">D. A minor policy issue with no legal significance</button>
+      </div>
+      <div class="q-feedback" id="qs7-fb"></div>
+    </div>
+    <div style="background:#faf5ff;border-radius:8px;padding:10px;margin-top:8px;font-size:12px;color:#6d28d9"><strong>Clue that mattered:</strong> Valid system access ≠ authorized access. HIPAA requires a job-related need (Minimum Necessary). Curiosity — even with good intentions — is not a permitted purpose. This is a common real-world HIPAA violation.</div>
+  </div>
+
+  <!-- SCENARIO 8: Family member requests info -->
+  <div class="card">
+    <div class="card-header"><div class="card-icon" style="background:#f0fdfa">👨‍👩‍👧</div><div><div class="card-title">Scenario 8 — The Family Request</div><div class="card-subtitle">Skill tested: Authorization / Who can receive PHI</div></div></div>
+    <div class="concept-box teal" style="margin-bottom:14px">
+      <div class="concept-label">The Situation</div>
+      <div class="concept-text">An adult patient's spouse comes to the front desk and asks for a printed copy of the patient's most recent lab results. The spouse says, "We're married — I have every right to see this." The patient is not present and has not designated the spouse as an authorized representative.</div>
+    </div>
+    <div class="q-block" id="qs8">
+      <div class="q-label scenario">SCENARIO QUESTION</div>
+      <div class="q-text">The correct response is to:</div>
+      <div class="q-options">
+        <button class="q-opt" onclick="answerQ('qs8','a','d')">A. Release the records — spouses have automatic legal access to a partner's medical records</button>
+        <button class="q-opt" onclick="answerQ('qs8','b','d')">B. Release a summary only — spouses may receive general health information</button>
+        <button class="q-opt" onclick="answerQ('qs8','c','d')">C. Ask the spouse to call back when the patient is present</button>
+        <button class="q-opt" onclick="answerQ('qs8','d','d')">D. Decline to release — under HIPAA, marriage alone does not grant access to a patient's PHI without the patient's authorization or documented legal representative status</button>
+      </div>
+      <div class="q-feedback" id="qs8-fb"></div>
+    </div>
+    <div style="background:#f0fdfa;border-radius:8px;padding:10px;margin-top:8px;font-size:12px;color:#0f766e"><strong>Clue that mattered:</strong> HIPAA protects the individual patient's information regardless of marital status. Spouses are not automatically authorized recipients. A signed authorization or documented legal representative designation is required.</div>
+  </div>
+
+  <!-- SCENARIO 9: Office discovers false claim pattern -->
+  <div class="card">
+    <div class="card-header"><div class="card-icon" style="background:#fef3c7">⚖️</div><div><div class="card-title">Scenario 9 — The Discovery</div><div class="card-subtitle">Skill tested: FCA / Compliance response protocol</div></div></div>
+    <div class="concept-box amber" style="margin-bottom:14px">
+      <div class="concept-label">The Situation</div>
+      <div class="concept-text">During a routine internal audit, the compliance officer discovers that over the past 18 months, the office has been billing Medicare for a specific injection service that was ordered but almost never actually administered. The pattern spans hundreds of claims. No one has been alerted externally yet.</div>
+    </div>
+    <div class="q-block" id="qs9">
+      <div class="q-label scenario">SCENARIO QUESTION</div>
+      <div class="q-text">What is the MOST appropriate sequence of actions?</div>
+      <div class="q-options">
+        <button class="q-opt" onclick="answerQ('qs9','a','c')">A. Quietly correct future billing and hope the past claims are not reviewed</button>
+        <button class="q-opt" onclick="answerQ('qs9','b','c')">B. Immediately fire the responsible staff and submit a press release</button>
+        <button class="q-opt" onclick="answerQ('qs9','c','c')">C. Stop the improper billing, conduct a thorough internal review of the full scope, preserve all documentation, and follow proper voluntary disclosure procedures</button>
+        <button class="q-opt" onclick="answerQ('qs9','d','c')">D. Continue operations normally while waiting for Medicare to contact the office first</button>
+      </div>
+      <div class="q-feedback" id="qs9-fb"></div>
+    </div>
+    <div style="background:#fffbeb;border-radius:8px;padding:10px;margin-top:8px;font-size:12px;color:#92400e"><strong>Clue that mattered:</strong> Once a potential FCA violation is discovered internally, the organization must stop, investigate fully, preserve records, and follow proper disclosure procedures. Concealment or inaction dramatically increases legal liability.</div>
+  </div>
+
+  <!-- SCENARIO 10: Staff skips privacy procedure -->
+  <div class="card">
+    <div class="card-header"><div class="card-icon" style="background:#fff1f2">🚫</div><div><div class="card-title">Scenario 10 — The Skipped Step</div><div class="card-subtitle">Skill tested: HIPAA compliance / Workflow vs violation</div></div></div>
+    <div class="concept-box red" style="margin-bottom:14px">
+      <div class="concept-label">The Situation</div>
+      <div class="concept-text">An overwhelmed front desk staff member skips giving new patients the Notice of Privacy Practices (NPP) because "the line is too long today." No patients' PHI is accessed or shared improperly during this time.</div>
+    </div>
+    <div class="q-block" id="qs10">
+      <div class="q-label scenario">SCENARIO QUESTION</div>
+      <div class="q-text">This situation is BEST described as:</div>
+      <div class="q-options">
+        <button class="q-opt" onclick="answerQ('qs10','a','c')">A. Acceptable — NPP distribution is optional when the office is busy</button>
+        <button class="q-opt" onclick="answerQ('qs10','b','c')">B. A minor workflow error with no compliance implications</button>
+        <button class="q-opt" onclick="answerQ('qs10','c','c')">C. A HIPAA compliance failure — covered entities are required to provide patients with the NPP and make good-faith efforts to obtain acknowledgment of receipt</button>
+        <button class="q-opt" onclick="answerQ('qs10','d','c')">D. Fraud — the office is intentionally withholding patient rights information</button>
+      </div>
+      <div class="q-feedback" id="qs10-fb"></div>
+    </div>
+    <div style="background:#fff1f2;border-radius:8px;padding:10px;margin-top:8px;font-size:12px;color:#b91c1c"><strong>Clue that mattered:</strong> Providing the NPP is a HIPAA Privacy Rule requirement — not optional. However, this is a compliance failure/procedural violation, not fraud (no intentional deception for financial gain).</div>
+  </div>
+</div>
+
+<!-- ============================================================
+     TAB 8: TIMED CHALLENGE ZONE
+     ============================================================ -->
+<div class="tab-content" id="tab-8">
+  <div class="section-intro">
+    <h2>⏱️ Timed Challenge Zone</h2>
+    <p>Exam conditions. Random questions. 90 seconds per question. Test your speed AND accuracy. This is where all your learning comes together.</p>
+    <div class="intro-grid">
+      <div class="intro-pill"><div class="intro-pill-label">You will do</div><div class="intro-pill-text">10 randomized questions under time pressure</div></div>
+      <div class="intro-pill"><div class="intro-pill-label">Time limit</div><div class="intro-pill-text">90 seconds per question</div></div>
+      <div class="intro-pill"><div class="intro-pill-label">Check yourself</div><div class="intro-pill-text">Score + missed question review at the end</div></div>
+      <div class="intro-pill"><div class="intro-pill-label">Points</div><div class="intro-pill-text">Speed bonus for fast correct answers</div></div>
+    </div>
+  </div>
+
+  <!-- START SCREEN -->
+  <div id="tc-start" class="card" style="text-align:center;padding:36px">
+    <div style="font-size:52px;margin-bottom:12px">⏱️</div>
+    <div style="font-size:22px;font-weight:700;color:#312e81;margin-bottom:8px">Ready for the Challenge?</div>
+    <div style="font-size:14px;color:#64748b;margin-bottom:20px;line-height:1.6">10 randomized CBCS-style questions. 90 seconds each.<br>Answer fast for a speed bonus. Miss one and see exactly why.</div>
+    <div style="display:flex;justify-content:center;gap:16px;flex-wrap:wrap">
+      <div style="background:#ede9fe;border-radius:12px;padding:14px 20px;min-width:100px"><div style="font-size:24px;font-weight:700;color:#4f46e5" id="tc-best-score">—</div><div style="font-size:11px;color:#6d28d9;font-weight:600">BEST SCORE</div></div>
+      <div style="background:#dcfce7;border-radius:12px;padding:14px 20px;min-width:100px"><div style="font-size:24px;font-weight:700;color:#16a34a" id="tc-attempts">0</div><div style="font-size:11px;color:#15803d;font-weight:600">ATTEMPTS</div></div>
+    </div>
+    <button class="btn btn-primary" onclick="startChallenge()" style="margin-top:24px;font-size:16px;padding:14px 40px">Start Challenge →</button>
+  </div>
+
+  <!-- GAME SCREEN -->
+  <div id="tc-game" style="display:none">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px">
+      <div style="display:flex;align-items:center;gap:12px">
+        <span style="font-size:13px;font-weight:600;color:#64748b">Question</span>
+        <span style="font-size:18px;font-weight:700;color:#4f46e5" id="tc-qnum">1</span>
+        <span style="font-size:13px;color:#64748b">of 10</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <span style="font-size:13px;font-weight:600;color:#64748b">Score</span>
+        <span style="font-size:18px;font-weight:700;color:#16a34a" id="tc-score">0</span>
+        <div id="tc-streak" style="background:#fef3c7;border:1px solid #fcd34d;border-radius:20px;padding:3px 10px;font-size:12px;font-weight:700;color:#92400e;display:none">🔥 Streak: <span id="tc-streak-count">0</span></div>
+      </div>
+    </div>
+
+    <!-- TIMER BAR -->
+    <div style="background:#e2e8f0;border-radius:20px;height:10px;margin-bottom:16px;overflow:hidden">
+      <div id="tc-timer-bar" style="height:100%;border-radius:20px;background:linear-gradient(90deg,#16a34a,#4f46e5);transition:width 0.5s linear;width:100%"></div>
+    </div>
+    <div style="text-align:right;font-size:13px;font-weight:700;color:#4f46e5;margin-bottom:12px">⏱ <span id="tc-timer-display">90</span>s</div>
+
+    <div class="q-block" id="tc-q-block" style="border-width:2px">
+      <div id="tc-q-label" class="q-label">QUESTION</div>
+      <div id="tc-q-text" class="q-text"></div>
+      <div id="tc-q-options" class="q-options"></div>
+      <div id="tc-feedback" class="q-feedback"></div>
+    </div>
+
+    <div style="text-align:center;margin-top:8px">
+      <button class="btn btn-outline btn-sm" id="tc-next-btn" onclick="nextChallengeQ()" style="display:none">Next Question →</button>
+    </div>
+  </div>
+
+  <!-- RESULTS SCREEN -->
+  <div id="tc-results" style="display:none">
+    <div class="card" style="text-align:center;padding:32px">
+      <div style="font-size:52px;margin-bottom:8px" id="tc-result-emoji">🏆</div>
+      <div style="font-size:24px;font-weight:700;color:#312e81;margin-bottom:4px" id="tc-result-title">Challenge Complete!</div>
+      <div style="font-size:15px;color:#64748b;margin-bottom:20px" id="tc-result-sub"></div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px">
+        <div style="background:#ede9fe;border-radius:12px;padding:14px"><div style="font-size:26px;font-weight:700;color:#4f46e5" id="tc-r-score">0</div><div style="font-size:11px;color:#6d28d9;font-weight:600">POINTS</div></div>
+        <div style="background:#dcfce7;border-radius:12px;padding:14px"><div style="font-size:26px;font-weight:700;color:#16a34a" id="tc-r-correct">0</div><div style="font-size:11px;color:#15803d;font-weight:600">CORRECT</div></div>
+        <div style="background:#fee2e2;border-radius:12px;padding:14px"><div style="font-size:26px;font-weight:700;color:#dc2626" id="tc-r-wrong">0</div><div style="font-size:11px;color:#b91c1c;font-weight:600">MISSED</div></div>
+      </div>
+      <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="startChallenge()">Try Again</button>
+        <button class="btn btn-outline" onclick="showTab(9)">Rapid Review →</button>
+      </div>
+    </div>
+    <div id="tc-missed-review" style="margin-top:16px"></div>
+  </div>
+</div>
+
+<!-- ============================================================
+     TAB 9: RAPID REVIEW
+     ============================================================ -->
+<div class="tab-content" id="tab-9">
+  <div class="section-intro">
+    <h2>📚 Rapid Review — Exam-Day Cheat Sheets</h2>
+    <p>The most important concepts, distinctions, and traps — organized for last-minute review. Read these the morning of your exam.</p>
+    <div class="intro-grid">
+      <div class="intro-pill"><div class="intro-pill-label">You will review</div><div class="intro-pill-text">All key Unit 6 concepts</div></div>
+      <div class="intro-pill"><div class="intro-pill-label">What to do</div><div class="intro-pill-text">Read cards → click "If you see this" cards</div></div>
+      <div class="intro-pill"><div class="intro-pill-label">Check yourself</div><div class="intro-pill-text">Can you finish each card from memory?</div></div>
+      <div class="intro-pill"><div class="intro-pill-label">Tip</div><div class="intro-pill-text">Print this tab or screenshot it</div></div>
+    </div>
+  </div>
+
+  <!-- HIPAA / PHI CHEAT SHEET -->
+  <div class="card">
+    <div class="card-header"><div class="card-icon" style="background:#ede9fe">🔒</div><div><div class="card-title">HIPAA &amp; PHI — Rapid Reference</div></div></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px">
+      <div style="background:#f8fafc;border-radius:10px;padding:14px;border-left:3px solid #4f46e5">
+        <div style="font-size:11px;font-weight:700;color:#4f46e5;margin-bottom:6px">HIPAA PRIVACY RULE</div>
+        <div style="font-size:13px;color:#334155;line-height:1.6">Governs <strong>who can access, use, and disclose</strong> PHI. Requires minimum necessary standard. Provides patients rights to access their records.</div>
+      </div>
+      <div style="background:#f8fafc;border-radius:10px;padding:14px;border-left:3px solid #7c3aed">
+        <div style="font-size:11px;font-weight:700;color:#7c3aed;margin-bottom:6px">HIPAA SECURITY RULE</div>
+        <div style="font-size:13px;color:#334155;line-height:1.6">Governs <strong>electronic PHI (ePHI)</strong>. Requires administrative, physical, and technical safeguards to protect ePHI.</div>
+      </div>
+      <div style="background:#f8fafc;border-radius:10px;padding:14px;border-left:3px solid #2563eb">
+        <div style="font-size:11px;font-weight:700;color:#2563eb;margin-bottom:6px">PHI — WHAT IT IS</div>
+        <div style="font-size:13px;color:#334155;line-height:1.6">Individually identifiable health information related to health status, care, or payment. Includes 18 types of identifiers (name, DOB, SSN, address, account #, dates, etc.).</div>
+      </div>
+      <div style="background:#f8fafc;border-radius:10px;padding:14px;border-left:3px solid #0d9488">
+        <div style="font-size:11px;font-weight:700;color:#0d9488;margin-bottom:6px">TPO EXCEPTIONS</div>
+        <div style="font-size:13px;color:#334155;line-height:1.6"><strong>T</strong>reatment · <strong>P</strong>ayment · Healthcare <strong>O</strong>perations. PHI may be used/disclosed for these purposes WITHOUT patient authorization.</div>
+      </div>
+      <div style="background:#f8fafc;border-radius:10px;padding:14px;border-left:3px solid #16a34a">
+        <div style="font-size:11px;font-weight:700;color:#16a34a;margin-bottom:6px">USE vs DISCLOSURE</div>
+        <div style="font-size:13px;color:#334155;line-height:1.6"><strong>Use</strong> = PHI accessed/shared WITHIN the covered entity.<br><strong>Disclosure</strong> = PHI shared OUTSIDE the covered entity.</div>
+      </div>
+      <div style="background:#f8fafc;border-radius:10px;padding:14px;border-left:3px solid #d97706">
+        <div style="font-size:11px;font-weight:700;color:#d97706;margin-bottom:6px">MINIMUM NECESSARY</div>
+        <div style="font-size:13px;color:#334155;line-height:1.6">Only the minimum PHI needed to accomplish the task should be used or disclosed. Never send more than required.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONSENT / AUTHORIZATION / ROI CHEAT SHEET -->
+  <div class="card">
+    <div class="card-header"><div class="card-icon" style="background:#dcfce7">✍️</div><div><div class="card-title">Consent · Authorization · Release of Information</div></div></div>
+    <div style="overflow-x:auto">
+    <table class="compare-table">
+      <tr><th>Concept</th><th>What It Is</th><th>When Required</th><th>Key Rule</th></tr>
+      <tr><td><strong>Informed Consent</strong></td><td>Written agreement to a procedure after full explanation of risks/benefits/alternatives</td><td>Surgeries, invasive procedures, clinical trials</td><td>Must be documented; patient must understand</td></tr>
+      <tr><td><strong>Implied Consent</strong></td><td>Consent inferred from patient behavior/actions</td><td>Routine exams, emergencies</td><td>NOT sufficient for surgeries or invasive procedures</td></tr>
+      <tr><td><strong>HIPAA Authorization</strong></td><td>Signed, specific permission for a non-TPO PHI disclosure</td><td>Employer requests, legal, research, marketing</td><td>Must include: what, who, why, expiration, signature</td></tr>
+      <tr><td><strong>Release of Information</strong></td><td>Process of fulfilling a records request</td><td>Any external records request</td><td>Must have valid authorization; incomplete forms → return, do not process</td></tr>
+    </table>
+    </div>
+  </div>
+
+  <!-- FRAUD / ABUSE / UPCODING / UNBUNDLING CHEAT SHEET -->
+  <div class="card">
+    <div class="card-header"><div class="card-icon" style="background:#fef3c7">⚠️</div><div><div class="card-title">Fraud · Abuse · Upcoding · Unbundling</div></div></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px">
+      <div style="background:#fff1f2;border-radius:10px;padding:14px;border:1px solid #fca5a5">
+        <div style="font-size:13px;font-weight:700;color:#b91c1c;margin-bottom:6px">🔴 FRAUD</div>
+        <div style="font-size:13px;color:#334155;line-height:1.6"><strong>Knowingly</strong> and intentionally submitting false claims or misrepresentations to receive improper payment.<br><br><em>Clue word: "knowingly," "intentionally," "deliberately"</em></div>
+      </div>
+      <div style="background:#fffbeb;border-radius:10px;padding:14px;border:1px solid #fcd34d">
+        <div style="font-size:13px;font-weight:700;color:#92400e;margin-bottom:6px">🟡 ABUSE</div>
+        <div style="font-size:13px;color:#334155;line-height:1.6">Improper billing practices resulting in unnecessary costs <strong>without proven intent</strong> to defraud.<br><br><em>Clue words: "pattern," "consistently," "without documentation"</em></div>
+      </div>
+      <div style="background:#ffe4e6;border-radius:10px;padding:14px;border:1px solid #fca5a5">
+        <div style="font-size:13px;font-weight:700;color:#b91c1c;margin-bottom:6px">📈 UPCODING</div>
+        <div style="font-size:13px;color:#334155;line-height:1.6">Billing a <strong>higher-level code</strong> than the service actually performed or documented.<br><br><em>Clue: One code, wrong (higher) level</em></div>
+      </div>
+      <div style="background:#fce7f3;border-radius:10px;padding:14px;border:1px solid #f9a8d4">
+        <div style="font-size:13px;font-weight:700;color:#be185d;margin-bottom:6px">📦 UNBUNDLING</div>
+        <div style="font-size:13px;color:#334155;line-height:1.6">Billing component codes <strong>separately</strong> when one global/comprehensive code should cover all.<br><br><em>Clue: Multiple codes instead of one global code</em></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FCA CHEAT SHEET -->
+  <div class="card">
+    <div class="card-header"><div class="card-icon" style="background:#f0fdfa">⚖️</div><div><div class="card-title">False Claims Act — Quick Reference</div></div></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px">
+      <div style="background:#f0fdfa;border-radius:10px;padding:14px;border-left:3px solid #0d9488"><div style="font-size:11px;font-weight:700;color:#0f766e;margin-bottom:4px">WHAT IT COVERS</div><div style="font-size:13px;color:#334155">False or fraudulent claims submitted to <strong>federal programs</strong> — Medicare, Medicaid, TRICARE.</div></div>
+      <div style="background:#f0fdfa;border-radius:10px;padding:14px;border-left:3px solid #0d9488"><div style="font-size:11px;font-weight:700;color:#0f766e;margin-bottom:4px">QUI TAM</div><div style="font-size:13px;color:#334155">Employees can report fraud on behalf of the government and may receive a share of recovered funds. Whistleblowers are protected from retaliation.</div></div>
+      <div style="background:#f0fdfa;border-radius:10px;padding:14px;border-left:3px solid #0d9488"><div style="font-size:11px;font-weight:700;color:#0f766e;margin-bottom:4px">PENALTIES</div><div style="font-size:13px;color:#334155">Civil penalties per false claim PLUS treble damages (3× the amount defrauded). Can result in exclusion from federal programs.</div></div>
+      <div style="background:#f0fdfa;border-radius:10px;padding:14px;border-left:3px solid #0d9488"><div style="font-size:11px;font-weight:700;color:#0f766e;margin-bottom:4px">DOCUMENTATION RULE</div><div style="font-size:13px;color:#334155">"If it isn't documented, it didn't happen." Always submit claims supported by complete clinical documentation.</div></div>
+    </div>
+  </div>
+
+  <!-- TOP TEST TRAPS -->
+  <div class="card">
+    <div class="card-header"><div class="card-icon" style="background:#fee2e2">🪤</div><div><div class="card-title">Top CBCS Test Traps</div></div></div>
+    <div style="display:grid;gap:8px">
+      <div class="trap-box"><div class="trap-label">Trap 1 — Consent ≠ Authorization</div><div class="trap-text">A general consent form does NOT authorize non-TPO disclosures (employer, legal, research). Those require a separate, signed HIPAA authorization.</div></div>
+      <div class="trap-box"><div class="trap-label">Trap 2 — Use ≠ Disclosure</div><div class="trap-text">Use = internal (within the entity). Disclosure = external (outside the entity). If it leaves the organization → disclosure.</div></div>
+      <div class="trap-box"><div class="trap-label">Trap 3 — Fraud ≠ Abuse</div><div class="trap-text">The clue is intent. "Knowingly" = fraud. Pattern without proven intent = abuse. Same billing problem, different legal classification.</div></div>
+      <div class="trap-box"><div class="trap-label">Trap 4 — Upcoding ≠ Unbundling</div><div class="trap-text">Upcoding = one wrong (higher) code. Unbundling = multiple codes for what should be one global code.</div></div>
+      <div class="trap-box"><div class="trap-label">Trap 5 — FCA only covers federal programs</div><div class="trap-text">Private insurance fraud is still fraud — but the False Claims Act specifically targets Medicare/Medicaid/federal program claims.</div></div>
+      <div class="trap-box"><div class="trap-label">Trap 6 — System access ≠ authorized access</div><div class="trap-text">Having login access to a system does not mean every record is accessible. A job-related need is required under the Minimum Necessary standard.</div></div>
+      <div class="trap-box"><div class="trap-label">Trap 7 — Urgency is a distractor</div><div class="trap-text">When a scenario mentions that something is urgent or the requester is in a rush — that is almost always a distractor designed to make you skip proper authorization steps.</div></div>
+    </div>
+  </div>
+
+  <!-- IF YOU SEE THIS → THINK THIS -->
+  <div class="card">
+    <div class="card-header"><div class="card-icon" style="background:#dbeafe">💡</div><div><div class="card-title">"If You See This → Think This" Cards</div><div class="card-subtitle">Click each card to reveal the exam-day strategy</div></div></div>
+    <div id="think-cards" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px"></div>
+  </div>
+
+  <!-- FINAL BADGE -->
+  <div class="card" style="text-align:center;padding:32px;background:linear-gradient(135deg,#1e1b4b,#312e81,#1e40af);border:none">
+    <div style="font-size:48px;margin-bottom:10px">🏆</div>
+    <div style="font-size:20px;font-weight:700;color:#fff;margin-bottom:6px">Unit 6 Mastery Complete</div>
+    <div style="font-size:14px;color:rgba(255,255,255,0.7);margin-bottom:16px">You've covered HIPAA, PHI, Consent, Authorization, Fraud, Abuse, Upcoding, Unbundling, the False Claims Act, and Compliance. Go earn that credential.</div>
+    <div style="font-size:13px;color:#fbbf24;font-weight:600">Total Points Earned: <span id="final-score-display">0</span></div>
+    <button class="btn btn-teal" onclick="showTab(8)" style="margin-top:16px">One More Challenge Run →</button>
+  </div>
+
+  <div style="text-align:center;padding:20px;color:#94a3b8;font-size:12px">
+    Designed and Curriculum Developed by <strong style="color:#4f46e5">Hilary Homaii</strong>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div style="text-align:center;padding:24px;color:#94a3b8;font-size:12px;border-top:1px solid #e2e8f0;margin-top:24px">
+  Designed and Curriculum Developed by <strong style="color:#4f46e5">Hilary Homaii</strong>
+</div>
+
+
+<script>
+var score=0, qAnswered=0, maxQ=100;
+
+// ---- ACCORDION ----
+function toggleAcc(el){
+  var body=el.nextElementSibling;
+  var isOpen=body.classList.contains('open');
+  el.closest('.card').querySelectorAll('.acc-body').forEach(function(b){b.classList.remove('open');});
+  el.closest('.card').querySelectorAll('.acc-trigger').forEach(function(t){t.classList.remove('open');});
+  if(!isOpen){body.classList.add('open');el.classList.add('open');}
+}
+
+
+  // ---- TRAP ZONE TOGGLE ----
+  function showTrap(id){
+    document.querySelectorAll('.trap-zone').forEach(function(z){z.style.display='none';});
+    var el=document.getElementById('trap-'+id);
+    if(el){el.style.display='block';setTimeout(function(){el.scrollIntoView({behavior:'smooth',block:'start'});},50);}
+  }
+
+  // ---- CONCEPT MAP DETAIL ----
+  function showCmapDetail(key){
+    var area=document.getElementById('cmap-detail-area');
+    var d=cmapDetails[key];
+    if(!d){area.innerHTML='';return;}
+    area.innerHTML='<div class="cmap-detail show" style="border-left:4px solid '+d.color+'">'
+      +'<h3 style="font-size:16px;font-weight:700;color:'+d.color+';margin-bottom:10px">'+d.title+'</h3>'
+      +'<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px">'+d.tags.map(function(t){return'<span class="detail-tag" style="background:'+d.bg+';color:'+d.color+'">'+t+'</span>';}).join('')+'</div>'
+      +'<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px">'
+      +'<div style="background:#f8fafc;border-radius:8px;padding:12px"><div style="font-size:11px;font-weight:700;color:#64748b;margin-bottom:4px">WHAT IT IS</div><div style="font-size:13px;color:#1a1a2e;line-height:1.5">'+d.what+'</div></div>'
+      +'<div style="background:#f8fafc;border-radius:8px;padding:12px"><div style="font-size:11px;font-weight:700;color:#4f46e5;margin-bottom:4px">WHY CBCS TESTS IT</div><div style="font-size:13px;color:#1a1a2e;line-height:1.5">'+d.why+'</div></div>'
+      +'<div style="background:#fef3c7;border-radius:8px;padding:12px"><div style="font-size:11px;font-weight:700;color:#92400e;margin-bottom:4px">WHAT STUDENTS CONFUSE</div><div style="font-size:13px;color:#1a1a2e;line-height:1.5">'+d.confused+'</div></div>'
+      +'<div style="background:#fff1f2;border-radius:8px;padding:12px"><div style="font-size:11px;font-weight:700;color:#dc2626;margin-bottom:4px">EXAM TRAP</div><div style="font-size:13px;color:#1a1a2e;line-height:1.5">'+d.trap+'</div></div>'
+      +'</div></div>';
+    setTimeout(function(){area.scrollIntoView({behavior:'smooth',block:'nearest'});},50);
+  }
+
+  // ---- TAB SWITCHING ----
+  function showTab(i){
+    document.querySelectorAll('.tab-content').forEach(function(t){t.classList.remove('active');});
+    document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active');});
+    document.getElementById('tab-'+i).classList.add('active');
+    document.querySelectorAll('.nav-tab')[i].classList.add('active');
+    if(i===9){var fsd=document.getElementById('final-score-display');if(fsd)fsd.textContent=score;}
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  // ---- SCORE ----
+  function addScore(pts){
+    score+=pts; qAnswered++;
+    var ts=document.getElementById('total-score');if(ts)ts.textContent=score;
+    var hs=document.getElementById('hero-score');if(hs)hs.textContent=score;
+    var hq=document.getElementById('hero-q');if(hq)hq.textContent=qAnswered;
+    var pct=Math.min(100,Math.round((qAnswered/maxQ)*100));
+    var pb=document.getElementById('overall-progress');if(pb)pb.style.width=pct+'%';
+    showToast('+'+pts+' pts! Great work!');
+  }
+  function showToast(msg){
+    var t=document.getElementById('toast');
+    if(!t)return;
+    t.textContent=msg;t.style.opacity='1';
+    setTimeout(function(){t.style.opacity='0';},2000);
+  }
+
+  // ---- ANSWER ENGINE ----
+  var feedbacks={};
+  function buildFeedbacks(){
+    // Tab 1
+    feedbacks['qcm1']={d:{pts:5,correct:'Correct! Submitting claims for services never provided is intentional misrepresentation — that is fraud.',wrong:{a:'Abuse involves improper patterns without clear intent to defraud.',b:'Upcoding means billing a higher code than performed — not billing for nonexistent services.',c:'Unbundling means billing separately for bundled services — not fabricating services.'}}};
+    feedbacks['qcm2']={b:{pts:5,correct:'Correct! Name + date of birth + diagnosis code linked to an individual is PHI.',wrong:{a:'Metadata is a general term. PHI is a specific legal category under HIPAA.',c:'Administrative data can be PHI when it identifies a patient and relates to care.',d:'PHI is protected private data, not a public record.'}}};
+    // Tab 2
+    feedbacks['qh0']={c:{pts:5,correct:'Exactly right! Medical billers handle PHI constantly — submitting claims, processing payments, verifying benefits.',wrong:{a:'Understanding principles matters — not memorizing the full text.',b:'Billing involves patient names, diagnoses, dates of service — all PHI.',d:'HIPAA applies to covered entities and their business associates, including billing staff.'}}};
+    feedbacks['qh1']={c:{pts:5,correct:'Correct! A billing statement with name, diagnosis, and date of service identifies the patient and relates to healthcare — that is PHI.',wrong:{a:'Published journal articles present de-identified data — not PHI.',b:'Aggregate statistics with no individual identifiers are not PHI.',d:'Training documents without real patient data are not PHI.'}}};
+    feedbacks['qh2']={b:{pts:5,correct:'Correct! A "use" is sharing PHI within the covered entity. A "disclosure" is sharing PHI outside the covered entity.',wrong:{a:'Use vs disclosure is not defined by electronic vs paper format.',c:'Neither universally requires a patient signature.',d:'These terms have a meaningful legal distinction that affects HIPAA compliance.'}}};
+    feedbacks['qh3']={b:{pts:5,correct:'Correct! Sending claims to a payer is a permitted disclosure under the TPO exception — no separate authorization needed.',wrong:{a:'Disclosing to a payer for payment is specifically permitted.',c:'For TPO purposes, no separate authorization form is required.',d:'The TPO exception applies to all payers, not only Medicare.'}}};
+    feedbacks['qh4']={c:{pts:8,correct:'Correct! An employer is not an authorized recipient of PHI without a specific signed patient authorization. "Insurance purposes" does not make it a TPO disclosure.',wrong:{a:'Employers are generally not covered entities and are not authorized recipients of employee PHI.',b:'The TPO exception applies to the patient\'s own treatment and payment — not employer requests.',d:'Verbal requests do not satisfy HIPAA authorization requirements.'}}};
+    feedbacks['qh5']={b:{pts:5,correct:'Correct! Leaving patient billing records visible to others in a waiting area is an impermissible disclosure of PHI — a HIPAA privacy breach.',wrong:{a:'The FCA addresses fraudulent billing to federal programs, not incidental information exposure.',c:'Leaving PHI visible to unauthorized individuals carries legal consequences under HIPAA.',d:'This is a privacy breach — not a consent issue.'}}};
+    feedbacks['qh6']={d:{pts:8,correct:'Correct! Accessing a record internally = use (within the entity). Transmitting the claim to the insurer = disclosure (outside the entity).',wrong:{a:'Accessing internally is use; sending externally is disclosure. Not both disclosures.',b:'The transmission to the payer goes outside the entity — that is a disclosure.',c:'It is the opposite: internal access is use, external transmission is disclosure.'}}};
+    feedbacks['qh7']={c:{pts:5,correct:'Correct! Sending more PHI than needed for the specific purpose violates the Minimum Necessary Standard.',wrong:{a:'The Privacy Notice requirement governs informing patients of their rights.',b:'The Security Rule governs electronic PHI safeguards.',d:'BAAs govern vendor relationships, not the content of what is shared.'}}};
+    feedbacks['qh8']={c:{pts:8,correct:'Correct! Submitting a claim to the health plan is a permitted disclosure under the TPO payment exception.',wrong:{a:'Sharing with pharmaceutical companies for marketing requires explicit patient authorization.',b:'Releasing records to an employer requires patient authorization.',d:'Sending records for general data analysis is not a TPO purpose.'}}};
+    // Tab 3
+    feedbacks['qc0']={c:{pts:5,correct:'Correct! When a patient voluntarily presents for care without objecting, that is implied consent — inferred from their actions.',wrong:{a:'Expressed written consent requires a formal signature.',b:'HIPAA authorization is a specific document for non-TPO PHI disclosures.',d:'Release of information is about sharing records, not agreeing to receive care.'}}};
+    feedbacks['qc1']={b:{pts:5,correct:'Correct! Informed consent requires full explanation of risks, benefits, and alternatives, plus documented written agreement.',wrong:{a:'Informed consent is required for elective procedures — not limited to emergencies.',c:'Informed consent explicitly requires explanation of risks.',d:'Implied consent uses behavioral signals; informed consent must be explicit and documented.'}}};
+    feedbacks['qc2']={c:{pts:8,correct:'Correct! Releasing records to an attorney is a non-TPO disclosure. A valid, signed HIPAA authorization is required.',wrong:{a:'Verbal confirmation is NOT sufficient.',b:'HIPAA does apply to legal matters.',d:'Physician approval alone does not satisfy HIPAA authorization requirements.'}}};
+    feedbacks['qc3']={d:{pts:5,correct:'Correct! An incomplete ROI form must NOT be processed. Return it and request a complete authorization.',wrong:{a:'Releasing records on an incomplete form violates HIPAA.',b:'Noting the deficiency does not cure the invalid authorization.',c:'The requesting party should NOT fill in missing information — only the authorized signer can.'}}};
+    feedbacks['qc4']={d:{pts:8,correct:'Correct! An adult sibling is not automatically authorized to receive PHI. A signed authorization from the patient is required.',wrong:{a:'Family members are NOT automatically authorized recipients of PHI under HIPAA.',b:'Partial release does not resolve the authorization issue.',c:'Coming in person does not substitute for a signed patient authorization.'}}};
+    feedbacks['qc5']={b:{pts:8,correct:'Correct! A general consent form signed at registration covers TPO-related activities only. It does NOT authorize disclosure to employers — that requires a separate HIPAA authorization.',wrong:{a:'General consent does NOT cover all future disclosures.',c:'Disability determination requests by employers are NOT a TPO exception.',d:'Records can be released without a court order when the patient provides a valid authorization.'}}};
+    feedbacks['qc6']={c:{pts:8,correct:'Correct! A valid HIPAA authorization must include the patient\'s signature and an expiration date or event.',wrong:{a:'Insurance ID is not a required element of a HIPAA authorization.',b:'The physician\'s name is not a required element.',d:'Practice manager signature is not required on a patient ROI authorization.'}}};
+    // Tab 4
+    feedbacks['qf0']={b:{pts:5,correct:'Correct! A data entry error from misreading handwriting lacks intent — it is abuse rather than intentional fraud.',wrong:{a:'Not every wrong code is fraud. Fraud requires intentional, knowing misrepresentation.',c:'Upcoding specifically means billing a higher complexity level.',d:'The FCA is triggered by knowing, intentional false claims — not accidental errors.'}}};
+    feedbacks['qf1']={c:{pts:5,correct:'Correct! Intent — whether the act was done knowingly and deliberately — is the key legal distinction between fraud and abuse.',wrong:{a:'Dollar amount affects the severity of penalties but does not define fraud vs abuse.',b:'Patient harm is relevant in malpractice, not in the fraud vs abuse distinction.',d:'The type of payer affects which laws apply, but intent is the dividing line.'}}};
+    feedbacks['qf2']={d:{pts:5,correct:'Correct! Billing higher-level E/M codes than documentation supports is upcoding.',wrong:{a:'Unbundling means billing component codes separately instead of a global code.',b:'FCA violations involve knowingly false claims to federal programs.',c:'This is a consistent pattern of coding at higher levels than documented.'}}};
+    feedbacks['qf3']={c:{pts:5,correct:'Correct! Billing the separate components of a global surgical package individually instead of using the comprehensive code is unbundling.',wrong:{a:'Upcoding means using a higher-level code than the service performed.',b:'Fraud requires intentional deception. Unbundling is a specific coding practice.',d:'Abuse involves patterns without proven intent.'}}};
+    feedbacks['qf4']={b:{pts:8,correct:'Correct! The biller submitted a higher E/M code than the documentation supports. Billing must reflect what is documented. This is upcoding.',wrong:{a:'Abuse lacks clear intent. Here the biller made a deliberate decision to use a higher code.',c:'Unbundling involves splitting one code into parts.',d:'Intentionally choosing a higher code than documented creates significant compliance risk.'}}};
+    feedbacks['qf5']={c:{pts:8,correct:'Correct! The explicit instruction to "always bill the highest level" establishes knowing, willful conduct — the defining element of fraud.',wrong:{a:'Dollar amount affects the scale, not the classification.',b:'Patient complaints are not required to classify conduct as fraud.',d:'Frequency alone does not make something fraud — intent is the key.'}}};
+    feedbacks['qf6']={b:{pts:5,correct:'Correct! Routine copayment waiver without documented financial hardship is abuse — it misrepresents the true cost to the payer.',wrong:{a:'Payer contracts typically prohibit routine waiver of cost-sharing.',c:'It is not classified as fraud unless intent to deceive is proven.',d:'Unbundling means splitting codes — copayment waiver is a separate concern.'}}};
+    feedbacks['qf7']={c:{pts:8,correct:'Correct! When systematic fraud is discovered, the biller must stop immediately and report through proper compliance channels.',wrong:{a:'Mentioning it at a staff meeting allows the fraud to continue.',b:'Correcting only future claims ignores the legal exposure from past false submissions.',d:'Contacting the payer without informing internal compliance leadership is not proper protocol.'}}};
+    feedbacks['qf8']={d:{pts:5,correct:'Correct! Charging above the payer\'s fee schedule consistently without making required adjustments is abuse — an improper billing practice without proven intentional deception.',wrong:{a:'Knowingly billing for a service never provided is fraud.',b:'Falsifying diagnosis to justify a test is intentional misrepresentation — fraud.',c:'Deliberately billing a higher code to increase revenue is intentional upcoding — fraud.'}}};
+    feedbacks['qf9']={b:{pts:8,correct:'Correct! A 90% rate of highest-complexity billing unsupported by documentation is a classic upcoding audit flag.',wrong:{a:'Unbundling involves splitting procedure codes — not inflating the complexity level.',c:'Upcoding identifies the specific billing practice.',d:'A 90% pattern across all visits is well beyond a clerical error.'}}};
+    // Tab 5
+    feedbacks['qfca0']={c:{pts:5,correct:'Correct! The False Claims Act is the primary federal law targeting false or fraudulent claims to federal healthcare programs like Medicare.',wrong:{a:'HIPAA governs patient information privacy — not false billing.',b:'The Anti-Kickback Statute addresses improper payments for referrals.',d:'The Stark Law addresses physician self-referral.'}}};
+    feedbacks['qfca1']={d:{pts:5,correct:'Correct! The FCA specifically covers claims submitted to federal government programs — primarily Medicare and Medicaid.',wrong:{a:'The FCA does not apply to private insurance fraud directly.',b:'Workers\' compensation is not a federal government program subject to the FCA.',c:'The FCA is limited to federal program claims.'}}};
+    feedbacks['qfca2']={c:{pts:8,correct:'Correct! The FCA\'s qui tam provision explicitly protects employees who report fraud. They may file a lawsuit on behalf of the government and receive a portion of any recovery.',wrong:{a:'Ignoring known fraud creates personal liability.',b:'Past false submissions must be addressed.',d:'Both state and federal reporting channels exist.'}}};
+    feedbacks['qfca3']={b:{pts:8,correct:'Correct! The proper response is a thorough internal review to understand scope, followed by appropriate corrective action and disclosure procedures.',wrong:{a:'Disclosing immediately without understanding the full scope could create additional legal exposure.',c:'Shredding documentation is obstruction — a serious additional federal violation.',d:'Retraining without addressing past false submissions does not resolve the problem.'}}};
+    feedbacks['qfca4']={d:{pts:8,correct:'Correct! Knowingly submitting claims to Medicare for tests that were not medically necessary and not intended for patient care is a textbook FCA violation.',wrong:{a:'A one-time error promptly corrected on a private claim does not meet the FCA threshold.',b:'A documentation gap for a genuinely performed service differs from knowingly false claims.',c:'Patient-provided inaccurate intake information is not the provider\'s false claim.'}}};
+    feedbacks['qfca5']={c:{pts:5,correct:'Correct! Internal audits serve as an early warning system — detecting problems before they escalate into government investigations.',wrong:{a:'Waiting for a government investigation before auditing is reactive.',b:'HIPAA does not specifically mandate billing audits.',d:'Audits primarily serve a compliance and financial integrity function.'}}};
+    feedbacks['qfca6']={d:{pts:5,correct:'Correct! Billing without documentation creates FCA and audit risk because the claim cannot be supported as valid.',wrong:{a:'HIPAA governs PHI privacy — not specifically the documentation requirement for billing.',b:'This is a legal/compliance risk, not a departmental routing problem.',c:'Patient billing amounts are a secondary concern.'}}};
+    feedbacks['qfca7']={b:{pts:8,correct:'Correct! The FCA explicitly prohibits retaliation against employees who report suspected fraud. Termination shortly after reporting may constitute illegal retaliation.',wrong:{a:'At-will employment does not override federal whistleblower protection laws.',c:'Both internal and external reporters are protected by the FCA\'s anti-retaliation provisions.',d:'The FCA\'s anti-retaliation provision exists specifically to protect employees who report compliance issues.'}}};
+    feedbacks['qfca8']={d:{pts:8,correct:'Correct! A confidential reporting system and written non-retaliation policy protect employees who refuse to submit improper claims.',wrong:{a:'Certification is important but does not protect against pressure to submit false claims.',b:'EHR software helps with documentation but does not address workplace dynamics.',c:'Speed of submission has no bearing on preventing fraud.'}}};
+    // Tab 6
+    feedbacks['qt1a']={b:{pts:8,correct:'Correct! An explicit written instruction to "code every visit as Level 5 regardless of documentation" establishes knowing, intentional false billing — fraud.',wrong:{a:'Following fraudulent orders does not absolve the coder.',c:'This goes far beyond a documentation error.',d:'Patient harm is not required to classify conduct as fraud.'}}};
+    feedbacks['qt1b']={c:{pts:8,correct:'Correct! Without confirmed intent, a billing pattern inconsistent with standards is classified as abuse.',wrong:{a:'A pattern alone does not prove intent.',b:'The FCA requires knowing, intentional false claims.',d:'Unbundling involves splitting component codes.'}}};
+    feedbacks['qt2a']={c:{pts:8,correct:'Correct! The defining feature of upcoding is using ONE code at a higher level than the service performed or documented.',wrong:{a:'Multiple codes are the clue for unbundling.',b:'The payer type does not define upcoding vs unbundling.',d:'Claim denial is a consequence, not a classification criterion.'}}};
+    feedbacks['qt2b']={d:{pts:8,correct:'Correct! When services included in a global code are billed as separate individual codes, that is unbundling.',wrong:{a:'Unbundling is not about billing at a lower level.',b:'Choosing a higher-level code for a simple service is upcoding.',c:'The insurance type does not determine upcoding vs unbundling.'}}};
+    feedbacks['qt3a']={c:{pts:8,correct:'Correct! A general consent form does NOT authorize specific non-TPO disclosures. A life insurance company is not part of TPO.',wrong:{a:'Consent does not cover all future disclosures.',b:'Consent forms do not have a standard 90-day expiration.',d:'Life insurance is not a healthcare payer and is not part of TPO.'}}};
+    feedbacks['qt3b']={d:{pts:8,correct:'Correct! Research by a pharmaceutical company is not a TPO purpose — it requires a specific patient authorization.',wrong:{a:'Specialist referrals are for treatment — a TPO use permitted without separate authorization.',b:'Submitting a claim to Medicare is for payment — explicitly covered under TPO.',c:'Internal clinical communication for treatment is a use within the covered entity.'}}};
+    feedbacks['qt4a']={c:{pts:8,correct:'Correct! Internal access to a record = use (within the entity). Sending the claim to the insurer = disclosure (outside the entity).',wrong:{a:'Sending to the insurer goes outside the entity — that is a disclosure.',b:'Reviewing internally stays within the entity — that is a use.',d:'This is the reverse: internal = use, external = disclosure.'}}};
+    feedbacks['qt5a']={c:{pts:5,correct:'Correct! A billing entry error that results in a claim rejection — with no PHI exposed to any unauthorized party — is a workflow error, not a HIPAA violation.',wrong:{a:'HIPAA violations require improper access or disclosure of PHI.',b:'The FCA requires knowing false claims to federal programs.',d:'Upcoding requires a higher code than the service performed.'}}};
+    feedbacks['qt5b']={b:{pts:8,correct:'Correct! Faxing PHI to the wrong physician\'s office means PHI was disclosed to an unauthorized recipient — a HIPAA privacy breach.',wrong:{a:'Misdirected faxes containing PHI are a recognized category of HIPAA breach.',c:'Abuse involves billing patterns. This is a privacy issue.',d:'PHI left the covered entity and went to an unauthorized recipient.'}}};
+    feedbacks['qt6a']={c:{pts:8,correct:'Correct! Submitting false claims to a private payer is fraud — but the FCA specifically covers federal program claims. Private payer fraud is addressed under other laws.',wrong:{a:'The FCA has a specific scope — federal program claims.',b:'It is absolutely fraud — just not an FCA violation.',d:'Intent to submit false claims for services never rendered is fraud regardless of payer.'}}};
+    feedbacks['qtmaster']={c:{pts:10,correct:'Master level! Correct! One code was submitted (90837) at a higher level than what was documented (90832, 30-min session). One code, higher level than documented = upcoding.',wrong:{a:'Unbundling would involve billing multiple component codes.',b:'Upcoding identifies the specific billing practice.',d:'HIPAA violations involve improper PHI access or disclosure — this is about code selection.'}}};
+    // Tab 7 scenarios
+    feedbacks['qs1']={d:{pts:10,correct:'Correct! Releasing records to an employer is a non-TPO disclosure. A verbal identity check is not a substitute for a signed HIPAA authorization. Urgency is a distractor.',wrong:{a:'Date of birth verification alone does not authorize a release. Employers are not TPO recipients.',b:'The summary vs. full records distinction does not resolve the authorization issue.',c:'Phone requests are not categorically forbidden — the issue is the lack of a signed authorization.'}}};
+    feedbacks['qs2']={b:{pts:10,correct:'Correct! A specific diagnosis (HIV) and appointment details were verbally disclosed to unauthorized individuals in a public waiting area — a HIPAA privacy breach.',wrong:{a:'Fraud involves intentional false claims for payment — this scenario has no billing element.',c:'Abuse is a billing pattern issue, not a privacy disclosure situation.',d:'Consent relates to treatment agreement — not how staff communicate about care in public.'}}};
+    feedbacks['qs3']={d:{pts:10,correct:'Correct! Both the expiration date and the stated purpose are required elements of a valid HIPAA authorization. Staff may not fill in missing information — only the authorized signer can.',wrong:{a:'A form is either complete and valid or it is not.',b:'Staff cannot complete missing authorization fields.',c:'Flagging and proceeding still results in processing an invalid authorization.'}}};
+    feedbacks['qs4']={d:{pts:10,correct:'Correct! An explicit instruction to "always use the highest code" is intentional upcoding. The new biller must stop, correct the practice, and report through compliance channels.',wrong:{a:'Following an ongoing fraudulent practice creates personal liability.',b:'Correcting only future claims ignores the obligation to address past improper submissions.',c:'The office manager may be part of the problem — use the designated compliance channel.'}}};
+    feedbacks['qs5']={c:{pts:10,correct:'Correct! Knowingly billing an established patient as a new comprehensive visit to Medicare is intentional misrepresentation — a False Claims Act violation.',wrong:{a:'HIPAA governs patient information privacy — not false billing to federal programs.',b:'The Stark Law prohibits physician self-referral — not this type of billing misrepresentation.',d:'The Anti-Kickback Statute addresses improper financial incentives for referrals.'}}};
+    feedbacks['qs6']={c:{pts:10,correct:'Correct! Billing individual component codes for a procedure that has a global code is unbundling — done here with the explicit goal of "maximizing reimbursement."',wrong:{a:'Upcoding uses one code at a higher level. Here the issue is splitting a global procedure.',b:'The stated intent indicates intentional unbundling.',d:'Global codes exist precisely to prevent component-by-component billing.'}}};
+    feedbacks['qs7']={c:{pts:10,correct:'Correct! Valid system access does not equal authorized access. Accessing a coworker\'s records out of personal curiosity violates the Minimum Necessary standard.',wrong:{a:'System access and good intentions do not create HIPAA-permissible access.',b:'Knowing someone personally is not a HIPAA-permissible access reason.',d:'Impermissible access to PHI is a documented HIPAA violation with real legal consequences.'}}};
+    feedbacks['qs8']={d:{pts:10,correct:'Correct! HIPAA protects each patient as an individual. Marriage does not automatically grant a spouse access to a patient\'s medical records without a signed authorization.',wrong:{a:'HIPAA does not create automatic spousal access rights to PHI.',b:'No records — summary or otherwise — may be released to the spouse without authorization.',c:'Asking the spouse to return with the patient still does not address the authorization requirement.'}}};
+    feedbacks['qs9']={c:{pts:10,correct:'Correct! When a systematic false billing pattern is discovered, the organization must stop, conduct a thorough internal review, preserve all documentation, and follow proper voluntary disclosure protocols.',wrong:{a:'Quietly correcting future claims while ignoring past false submissions does not cure FCA liability.',b:'Firing staff and issuing a press release are not the correct compliance response sequence.',d:'Waiting for Medicare to discover the problem may be viewed as concealment.'}}};
+    feedbacks['qs10']={c:{pts:10,correct:'Correct! HIPAA\'s Privacy Rule requires covered entities to provide patients with the NPP and make good-faith efforts to obtain acknowledgment. Skipping this is a compliance failure — though not fraud.',wrong:{a:'NPP distribution is a regulatory requirement — not optional.',b:'Failing to provide a legally required notice has regulatory implications.',d:'Fraud requires intentional deception for financial gain. This is a procedural compliance failure.'}}};
+  }
+
+  function answerQ(qid,chosen,correct){
+    var block=document.getElementById(qid);
+    if(!block||block.classList.contains('correct')||block.classList.contains('incorrect'))return;
+    var opts=block.querySelectorAll('.q-opt');
+    opts.forEach(function(o){o.disabled=true;});
+    var letters=['a','b','c','d'];
+    var chosenOpt=opts[letters.indexOf(chosen)];
+    var correctOpt=opts[letters.indexOf(correct)];
+    var fb=document.getElementById(qid+'-fb');
+    var data=feedbacks[qid];
+    if(!data||!data[correct])return;
+    var cData=data[correct];
+    if(chosen===correct){
+      block.classList.add('correct');
+      chosenOpt.classList.add('selected-correct');
+      fb.className='q-feedback show correct';
+      fb.innerHTML='<strong>&#10003; Correct!</strong> '+cData.correct+' <span class="points-badge">+'+cData.pts+' pts</span>';
+      addScore(cData.pts);
+    } else {
+      block.classList.add('incorrect');
+      chosenOpt.classList.add('selected-wrong');
+      correctOpt.classList.add('reveal-correct');
+      fb.className='q-feedback show incorrect';
+      var wrongReason=(cData.wrong&&cData.wrong[chosen])?cData.wrong[chosen]:'That is not the best answer.';
+      fb.innerHTML='<strong>&#10007; Not quite.</strong> '+wrongReason+'<br><br><strong>&#10003; Correct answer:</strong> '+cData.correct;
+    }
+  }
+
+  // ---- TIMED CHALLENGE ----
+  var tcPool=[
+    {q:'What is the key legal distinction between fraud and abuse?',opts:['The dollar amount of the claim','Whether the act was done knowingly and intentionally','Whether the patient was harmed','Whether Medicare or private insurance was billed'],ans:1,rat:'Intent — the "knowingly and intentionally" element — is the defining legal distinction. Fraud requires it; abuse does not.'},
+    {q:'Which PHI disclosure does NOT require patient authorization?',opts:['Releasing records to a patient\'s employer','Sharing records with a pharmaceutical research company','Submitting a claim to the patient\'s health plan for payment','Providing records for a personal injury lawsuit'],ans:2,rat:'Submitting a claim for payment is a TPO exception — no separate authorization required.'},
+    {q:'A provider bills a 10-minute office visit as a 45-minute comprehensive visit. This is:',opts:['Unbundling','Abuse','Upcoding','A documentation error only'],ans:2,rat:'Billing a higher E/M code than the service performed or documented is upcoding — one code, at the wrong (higher) level.'},
+    {q:'Billing the components of a global surgical package as individual codes is called:',opts:['Upcoding','Unbundling','Fraud only','Abuse only'],ans:1,rat:'Splitting a comprehensive procedure into separately billed components is unbundling — multiple codes instead of one global code.'},
+    {q:'The False Claims Act primarily applies to claims submitted to:',opts:['Any insurance company','Private insurance only','Workers\' compensation only','Federal programs such as Medicare and Medicaid'],ans:3,rat:'The FCA covers false claims to federal government programs. Private payer fraud is addressed by other laws.'},
+    {q:'A Release of Information form is missing the patient\'s signature. Staff should:',opts:['Release the records — other fields are complete','Return the form — a signature is a required element','Ask the requestor to sign on the patient\'s behalf','Release a summary only'],ans:1,rat:'A patient signature is a required element. An incomplete form must be returned — it cannot be processed.'},
+    {q:'Which term describes accessing PHI within the covered entity (internally)?',opts:['Disclosure','Release','Use','Authorization'],ans:2,rat:'"Use" refers to accessing or sharing PHI within the covered entity. "Disclosure" refers to sharing PHI outside the entity.'},
+    {q:'An employee discovers their supervisor is submitting false Medicare claims. Under the FCA, the employee:',opts:['Has no legal obligation','May report the fraud and is protected from retaliation','Should only report to a state board','Must wait for an external audit'],ans:1,rat:'The FCA\'s qui tam provision protects employees who report fraud. They cannot be legally retaliated against.'},
+    {q:'A biller accesses a coworker\'s medical record out of personal curiosity. This violates:',opts:['The Stark Law','The False Claims Act','HIPAA — impermissible use of PHI without a job-related need','No law — they have system access'],ans:2,rat:'Valid system access does not equal authorized access. Accessing PHI without a job-related need violates the Minimum Necessary standard.'},
+    {q:'Which scenario requires a specific HIPAA authorization (not just general consent)?',opts:['Submitting a claim to Medicare','A specialist referral for treatment','An internal billing office reviewing a claim','Releasing records to a life insurance company'],ans:3,rat:'Life insurance requests are non-TPO disclosures — they require a specific, signed HIPAA authorization.'},
+    {q:'Routine waiver of patient copayments without documented hardship is BEST classified as:',opts:['Fraud','Abuse — improper billing pattern without proven intent','Upcoding','An acceptable customer service practice'],ans:1,rat:'Routine undocumented copay waiver misrepresents the true cost of services to payers — this is abuse.'},
+    {q:'A general consent form signed at registration:',opts:['Covers all future record disclosures','Only covers TPO — not non-TPO disclosures like employer requests','Expires after 30 days','Is the same as a HIPAA authorization'],ans:1,rat:'General consent covers TPO. Non-TPO disclosures require a separate, specific HIPAA authorization.'},
+    {q:'"If it isn\'t documented, it didn\'t happen" supports:',opts:['Upcoding high-complexity visits','Billing compliance and audit defense — claims must have documentation','HIPAA consent requirements','Unbundling surgical packages'],ans:1,rat:'Documentation integrity is central to billing compliance and FCA defense.'},
+    {q:'Sharing a patient\'s diagnosis with their treating specialist for a referral is:',opts:['A HIPAA violation requiring authorization','A permitted use/disclosure for treatment — no authorization needed','Abuse','A release of information requiring a signed form'],ans:1,rat:'Sharing PHI with treating clinicians for treatment is explicitly permitted under the TPO exception.'},
+    {q:'A staff member faxes patient records to the wrong provider\'s office. This is:',opts:['A workflow error with no compliance significance','Upcoding','A HIPAA privacy breach — PHI was disclosed to an unauthorized recipient','Abuse'],ans:2,rat:'A misdirected fax containing PHI is a recognized HIPAA privacy breach.'}
+  ];
+  var tcState={qList:[],idx:0,score:0,correct:0,wrong:0,streak:0,timer:null,timeLeft:90,missed:[],attempts:0,bestScore:0};
+
+  function shuffleArr(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+
+  function startChallenge(){
+    tcState.qList=shuffleArr(tcPool.slice()).slice(0,10);
+    tcState.idx=0;tcState.score=0;tcState.correct=0;tcState.wrong=0;tcState.streak=0;tcState.missed=[];
+    tcState.attempts++;
+    document.getElementById('tc-attempts').textContent=tcState.attempts;
+    document.getElementById('tc-start').style.display='none';
+    document.getElementById('tc-results').style.display='none';
+    document.getElementById('tc-game').style.display='block';
+    document.getElementById('tc-streak').style.display='none';
+    document.getElementById('tc-score').textContent='0';
+    loadTCQuestion();
+  }
+
+  function loadTCQuestion(){
+    var q=tcState.qList[tcState.idx];
+    document.getElementById('tc-qnum').textContent=tcState.idx+1;
+    document.getElementById('tc-q-text').textContent=q.q;
+    document.getElementById('tc-feedback').className='q-feedback';
+    document.getElementById('tc-next-btn').style.display='none';
+    var block=document.getElementById('tc-q-block');block.className='q-block';
+    var opts=document.getElementById('tc-q-options');opts.innerHTML='';
+    q.opts.forEach(function(opt,i){
+      var btn=document.createElement('button');btn.className='q-opt';
+      btn.textContent=['A','B','C','D'][i]+'. '+opt;
+      btn.onclick=function(){answerTC(i,btn);};
+      opts.appendChild(btn);
+    });
+    startTCTimer();
+  }
+
+  function startTCTimer(){
+    clearInterval(tcState.timer);tcState.timeLeft=90;updateTimerUI();
+    tcState.timer=setInterval(function(){tcState.timeLeft--;updateTimerUI();if(tcState.timeLeft<=0){clearInterval(tcState.timer);timeUpTC();}},1000);
+  }
+
+  function updateTimerUI(){
+    document.getElementById('tc-timer-display').textContent=tcState.timeLeft;
+    var pct=(tcState.timeLeft/90)*100;
+    var bar=document.getElementById('tc-timer-bar');bar.style.width=pct+'%';
+    bar.style.background=tcState.timeLeft>30?'linear-gradient(90deg,#16a34a,#4f46e5)':tcState.timeLeft>10?'linear-gradient(90deg,#d97706,#dc2626)':'#dc2626';
+  }
+
+  function answerTC(chosen,btn){
+    clearInterval(tcState.timer);
+    var q=tcState.qList[tcState.idx];
+    var opts=document.getElementById('tc-q-options').querySelectorAll('.q-opt');
+    opts.forEach(function(o){o.disabled=true;});
+    var fb=document.getElementById('tc-feedback');var block=document.getElementById('tc-q-block');
+    if(chosen===q.ans){
+      var bonus=tcState.timeLeft>60?3:tcState.timeLeft>30?2:1;var pts=5*bonus;
+      tcState.score+=pts;tcState.correct++;tcState.streak++;
+      btn.classList.add('selected-correct');block.classList.add('correct');
+      fb.className='q-feedback show correct';
+      fb.innerHTML='<strong>&#10003; Correct!</strong> '+q.rat+' <span class="points-badge">+'+pts+' pts'+(bonus>1?' (speed bonus!)':'')+'</span>';
+      if(tcState.streak>=2){document.getElementById('tc-streak').style.display='inline-flex';document.getElementById('tc-streak-count').textContent=tcState.streak;}
+      score+=pts;
+      var ts=document.getElementById('total-score');if(ts)ts.textContent=score;
+      var hs=document.getElementById('hero-score');if(hs)hs.textContent=score;
+    } else {
+      tcState.wrong++;tcState.streak=0;
+      document.getElementById('tc-streak').style.display='none';
+      btn.classList.add('selected-wrong');opts[q.ans].classList.add('reveal-correct');
+      block.classList.add('incorrect');fb.className='q-feedback show incorrect';
+      fb.innerHTML='<strong>&#10007; Not quite.</strong> '+q.rat;
+      tcState.missed.push(q);
+    }
+    document.getElementById('tc-score').textContent=tcState.score;
+    document.getElementById('tc-next-btn').style.display='inline-flex';
+  }
+
+  function timeUpTC(){
+    var q=tcState.qList[tcState.idx];
+    var opts=document.getElementById('tc-q-options').querySelectorAll('.q-opt');
+    opts.forEach(function(o){o.disabled=true;});
+    opts[q.ans].classList.add('reveal-correct');
+    tcState.wrong++;tcState.streak=0;
+    document.getElementById('tc-streak').style.display='none';
+    document.getElementById('tc-feedback').className='q-feedback show incorrect';
+    document.getElementById('tc-feedback').innerHTML='<strong>&#9200; Time\'s up!</strong> '+q.rat;
+    document.getElementById('tc-q-block').classList.add('incorrect');
+    tcState.missed.push(q);
+    document.getElementById('tc-next-btn').style.display='inline-flex';
+  }
+
+  function nextChallengeQ(){tcState.idx++;if(tcState.idx>=10){endChallenge();return;}loadTCQuestion();}
+
+  function endChallenge(){
+    clearInterval(tcState.timer);
+    document.getElementById('tc-game').style.display='none';
+    document.getElementById('tc-results').style.display='block';
+    var pct=Math.round((tcState.correct/10)*100);
+    var emojiMap=pct>=90?'&#127942;':pct>=70?'&#129352;':pct>=50?'&#129353;':'&#128170;';
+    var title=pct>=90?'Outstanding!':pct>=70?'Well Done!':pct>=50?'Good Effort!':'Keep Practicing!';
+    document.getElementById('tc-result-emoji').innerHTML=emojiMap;
+    document.getElementById('tc-result-title').textContent=title;
+    document.getElementById('tc-result-sub').textContent=pct+'% accuracy — '+tcState.correct+' of 10 correct';
+    document.getElementById('tc-r-score').textContent=tcState.score;
+    document.getElementById('tc-r-correct').textContent=tcState.correct;
+    document.getElementById('tc-r-wrong').textContent=tcState.wrong;
+    if(tcState.score>tcState.bestScore){tcState.bestScore=tcState.score;document.getElementById('tc-best-score').textContent=tcState.bestScore;}
+    var missedEl=document.getElementById('tc-missed-review');missedEl.innerHTML='';
+    if(tcState.missed.length>0){
+      var h=document.createElement('div');
+      h.innerHTML='<div style="font-size:16px;font-weight:700;color:#1a1a2e;margin-bottom:12px">&#128221; Missed Question Review</div>';
+      missedEl.appendChild(h);
+      tcState.missed.forEach(function(q){
+        var d=document.createElement('div');d.className='card';
+        d.innerHTML='<div style="font-size:14px;font-weight:600;color:#1a1a2e;margin-bottom:8px">'+q.q+'</div>'
+          +'<div style="background:#dcfce7;border-radius:8px;padding:8px 12px;font-size:13px;color:#15803d;margin-bottom:6px"><strong>&#10003; Correct:</strong> '+['A','B','C','D'][q.ans]+'. '+q.opts[q.ans]+'</div>'
+          +'<div style="background:#f0f9ff;border-radius:8px;padding:8px 12px;font-size:13px;color:#0369a1"><strong>Why:</strong> '+q.rat+'</div>';
+        missedEl.appendChild(d);
+      });
+    }
+    var fsd=document.getElementById('final-score-display');if(fsd)fsd.textContent=score;
+  }
+
+  // ---- THINK CARDS ----
+  function buildThinkCards(){
+    var cards=[
+      {see:'"Knowingly submitted"',think:'FRAUD — intent is present'},
+      {see:'"Billing pattern without documentation"',think:'ABUSE — improper but no proven intent'},
+      {see:'"Higher code than documented"',think:'UPCODING — one code, wrong level'},
+      {see:'"Separate codes for bundled service"',think:'UNBUNDLING — multiple codes, should be global'},
+      {see:'"Claims to Medicare/Medicaid"',think:'FALSE CLAIMS ACT territory'},
+      {see:'"Employer requests records"',think:'Non-TPO — HIPAA AUTHORIZATION required'},
+      {see:'"Signed at registration"',think:'General CONSENT — NOT authorization for non-TPO'},
+      {see:'"Accessed PHI without job need"',think:'HIPAA violation — Minimum Necessary standard'},
+      {see:'"Incomplete ROI form"',think:'RETURN IT — do not process'},
+      {see:'"Urgency / pressure to release"',think:'DISTRACTOR — authorization still required'},
+      {see:'"Employee reports fraud, then fired"',think:'FCA RETALIATION — whistleblower protection applies'},
+      {see:'"PHI shared outside the entity"',think:'DISCLOSURE — not a use'}
+    ];
+    var el=document.getElementById('think-cards');if(!el)return;
+    cards.forEach(function(card){
+      var div=document.createElement('div');
+      div.style.cssText='background:#eff6ff;border:2px solid #bfdbfe;border-radius:10px;padding:12px;cursor:pointer;transition:all 0.2s;font-size:13px';
+      div.innerHTML='<div style="font-size:11px;font-weight:700;color:#1d4ed8;margin-bottom:4px">IF YOU SEE...</div><div style="color:#1e40af;font-weight:600">'+card.see+'</div>';
+      div.onclick=function(){
+        if(div.dataset.flipped==='1'){
+          div.style.background='#eff6ff';div.style.borderColor='#bfdbfe';
+          div.innerHTML='<div style="font-size:11px;font-weight:700;color:#1d4ed8;margin-bottom:4px">IF YOU SEE...</div><div style="color:#1e40af;font-weight:600">'+card.see+'</div>';
+          div.dataset.flipped='0';
+        } else {
+          div.style.background='#f0fdf4';div.style.borderColor='#86efac';
+          div.innerHTML='<div style="font-size:11px;font-weight:700;color:#15803d;margin-bottom:4px">THINK...</div><div style="color:#15803d;font-weight:700;font-size:14px">'+card.think+'</div>';
+          div.dataset.flipped='1';
+        }
+      };
+      el.appendChild(div);
+    });
+  }
+
+  // ---- INIT ----
+  buildFeedbacks();
+  buildThinkCards();
+</script>
+</body>
+</html>
